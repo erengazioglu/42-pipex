@@ -53,7 +53,11 @@ _(More on this later.)_
 
 ## Resources
 
-- **Manual entries:** e.g. `man perror,`, `man execve`...
+- **Manual entries:**
+    - `man perror`,
+    - `man execve`,
+    - `man pipe`.
 - **Fellow 42 students:** As always, conversations with peers were the most valuable resource.
 - **Google & Forums:** Heavy use of Google searches, often leading to Stack Overflow and similar forums.
+    - This beautiful [StackOverflow thread](https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators) in particular helped me get started.
 - **AI:** _(More on this later.)_
