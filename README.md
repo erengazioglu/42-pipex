@@ -57,7 +57,25 @@ _(More on this later.)_
     - `man perror`,
     - `man execve`,
     - `man pipe`.
-- **Fellow 42 students:** As always, conversations with peers were the most valuable resource.
 - **Google & Forums:** Heavy use of Google searches, often leading to Stack Overflow and similar forums.
     - This beautiful [StackOverflow thread](https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators) in particular helped me get started.
 - **AI:** _(More on this later.)_
+- **Fellow 42 students:** As always, conversations with peers are the most valuable resource.
+- https://beej.us/guide/bgipc/html/split/intro.html#intro
+
+dup2 execve
+
+
+valgrind --track-fds=yes --trace-children=yes
+gdb for child processes
+gdb --args 
+set detach-on-fork off
+b main etc etc
+layout src
+info inferiors
+inferior #
+
+protect dup2 like malloc
+
+https://www.amazon.com/exec/obidos/ISBN=0201563177/wrichardstevensA/
+https://linuxcommand.org/tlcl.php

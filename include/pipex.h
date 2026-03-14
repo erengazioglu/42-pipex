@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/12 13:33:35 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/14 17:32:41 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 # define PIPEX_H
 
 # include "../libft/include/libft.h"
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 #endif
