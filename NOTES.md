@@ -40,11 +40,17 @@ In a pipeline, all commands work concurrently as separate processes.
 
 ## Errors (perror, strerror)
 
-`perror(const char *s)`:
+```c
+    perror(const char *s);
+    strerror(int errnum);
+```
 
 > Produces a message on stderr describing the last error encountered (...).
 
-- Prefixed by the string s passed in as argument.
+- perror is a human-readable message prefixed by the string s passed in as argument.
+- strerror is just the message part, as a string.
+
+**Always check the return value of the function that produced the error first.** Programs don't reset errno to 0, so do this to make sure you don't report an error from the past.
 
 ## Unsorted
 

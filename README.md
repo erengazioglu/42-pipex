@@ -57,6 +57,7 @@ _(More on this later.)_
     - `man execve`
     - `man pipe`
     - `man 3 perror`
+    - `man 3 write`
 - The Linux Programming Interface (book).
 - [Beej's Guide to IPC](https://beej.us/guide/bgipc/html/split/).
 - **Google & Forums:** Heavy use of Google searches, often leading to Stack Overflow and similar forums.
