@@ -6,12 +6,11 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/17 10:51:57 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/17 12:25:35 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
-#include <errno.h>
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -20,6 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	int fd = open(argv[1], O_RDONLY);
 	if (fd == -1) {
 		ft_printf("errno = %d\n", errno);
+		perror("");
 		// switch (errno) {
 		// 	case E
 		// }
