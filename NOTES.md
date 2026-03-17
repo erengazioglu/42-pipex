@@ -24,7 +24,8 @@ Checklist:
 
 ## pipe()
 
-In a pipeline, all commands work concurrently as separate processes.
+- read() will attempt to read as many bytes as the buf_size from the pipe.
+- read() will block, waiting for data until the write descriptor for the pipe is closed.
 
 ## File descriptors
 
@@ -41,6 +42,8 @@ In a pipeline, all commands work concurrently as separate processes.
 - **The child process gets a copy of the parent's data.** 
 - **The parent will wait() or waitpid() for the child to signal its exit.** It could also ignore `SIGCHLD` (`signal(SIGCHLD, SIG_IGN)`).
 - **fork() will return -1 if there was an issue, 0 if you are the child process, or the child's pid if you're the parent process.** 
+
+> A common scenario is that a pipe is used for communication between two siblings—their parent creates the pipe, and then creates the two children. This is what the shell does when building a pipeline.
 
 ## Waits (wait(), waitpid())
 
