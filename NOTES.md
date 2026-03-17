@@ -26,7 +26,7 @@ In a pipeline, all commands work concurrently as separate processes.
 
 ## File descriptors
 
-## fork()
+## Child processes (fork)
 
 **The child process will get a copy of the parent's data.** 
 
@@ -34,6 +34,32 @@ In a pipeline, all commands work concurrently as separate processes.
 
 **fork() will return -1 if there was an issue, 0 if you are the child process, or the child's pid if you're the parent process.** 
 
-## wait(), waitpid()
+## Waits (wait(), waitpid())
 
 - wait will wait for any child that exits first. waitpid will wait for a specific child to exit instead.
+
+## Errors (perror, strerror)
+
+`perror(const char *s)`:
+
+> Produces a message on stderr describing the last error encountered (...).
+
+- Prefixed by the string s passed in as argument.
+
+## Unsorted
+
+dup2 execve
+
+valgrind --track-fds=yes --trace-children=yes
+gdb for child processes
+gdb --args 
+set detach-on-fork off
+b main etc etc
+layout src
+info inferiors
+inferior #
+
+protect dup2 like malloc
+
+https://www.amazon.com/exec/obidos/ISBN=0201563177/wrichardstevensA/
+https://linuxcommand.org/tlcl.php

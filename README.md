@@ -54,28 +54,14 @@ _(More on this later.)_
 ## Resources
 
 - **Manual entries:**
-    - `man perror`,
-    - `man execve`,
-    - `man pipe`.
+    - `man execve`
+    - `man pipe`
+    - `man 3 perror`
+- The Linux Programming Interface (book).
+- [Beej's Guide to IPC](https://beej.us/guide/bgipc/html/split/).
 - **Google & Forums:** Heavy use of Google searches, often leading to Stack Overflow and similar forums.
     - This beautiful [StackOverflow thread](https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators) in particular helped me get started.
-- **AI:** _(More on this later.)_
-- **Fellow 42 students:** As always, conversations with peers are the most valuable resource.
-- https://beej.us/guide/bgipc/html/split/intro.html#intro
-
-dup2 execve
-
-
-valgrind --track-fds=yes --trace-children=yes
-gdb for child processes
-gdb --args 
-set detach-on-fork off
-b main etc etc
-layout src
-info inferiors
-inferior #
-
-protect dup2 like malloc
-
-https://www.amazon.com/exec/obidos/ISBN=0201563177/wrichardstevensA/
-https://linuxcommand.org/tlcl.php
+- **AI:**
+    - Helped me find _Beej's guide to IPC_ and _The Linux Programming Interface_ (above).
+- **Fellow 42 students:**
+    - Shout out to _sseo_ and _amguinam_ for taking the time to teaching me key concepts!
