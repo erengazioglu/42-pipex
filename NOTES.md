@@ -7,6 +7,8 @@ Checklist:
 - wait, waitpid
 - dup2
 - perror
+- access
+- fork
 
 ## General info
 
@@ -26,17 +28,25 @@ In a pipeline, all commands work concurrently as separate processes.
 
 ## File descriptors
 
+- dup(old_fd) will duplicate a file descriptor and return the new fd (assigning the first available fd = lowest available slot.)
+- dup2(old_fd) will do the same but will give the fd you specify (closing it first if needed). Close it manually though, because it will silently ignore a close() error otherwise.
+- if old_fd is invalid, dup2 fails (EBADF), and new_fd is not closed (another reason to close explicitly).
+
+
 ## Child processes (fork)
 
-**The child process will get a copy of the parent's data.** 
-
-**The parent will wait() or waitpid() for the child to signal its exit.** It could also ignore `SIGCHLD` (`signal(SIGCHLD, SIG_IGN)`).
-
-**fork() will return -1 if there was an issue, 0 if you are the child process, or the child's pid if you're the parent process.** 
+- Fork takes no arguments.
+- Returns -1 if it can't fork.
+- If successful, returns child's PID for the parent, and 0 for the child process ([https://beej.us/guide/bgipc/html/split/fork.html#im-mentally-prepared-give-me-the-button])
+- **The child process gets a copy of the parent's data.** 
+- **The parent will wait() or waitpid() for the child to signal its exit.** It could also ignore `SIGCHLD` (`signal(SIGCHLD, SIG_IGN)`).
+- **fork() will return -1 if there was an issue, 0 if you are the child process, or the child's pid if you're the parent process.** 
 
 ## Waits (wait(), waitpid())
 
 - wait will wait for any child that exits first. waitpid will wait for a specific child to exit instead.
+- it takes a &status int address, which it will set with the exit status of the child process.
+
 
 ## Errors (perror, strerror)
 

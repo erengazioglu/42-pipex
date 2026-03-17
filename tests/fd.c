@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:22:47 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/17 15:09:56 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/17 17:37:06 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,24 @@ int	crash(char *s)
 	exit(EXIT_FAILURE);
 }
 
+void	copy(int *fd, char *buf)
+{
+	buf = get_next_line(fd[0]);
+	if (!buf)
+		crash("Reading from file");
+	while (buf)
+	{
+		if (write(fd[1], buf, ft_strlen(buf)) != (ssize_t) ft_strlen(buf))
+			crash("Writing to file");
+		free(buf);
+		buf = get_next_line(fd[0]);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	int		fd[2];
 	int		flags[2];
-	char	*line;
 	
 	if (argc != 3)
 		errno = EINVAL;
@@ -37,16 +50,6 @@ int	main(int argc, char **argv)
 	fd[1] = open(argv[2], flags[0], flags[1]);
 	if (fd[1] == -1)
 		crash("Opening file to write");
-	line = get_next_line(fd[0]);
-	if (!line)
-		crash("Reading from file");
-	while (line)
-	{
-		if (write(fd[1], line, ft_strlen(line)) != (ssize_t) ft_strlen(line))
-			crash("Writing to file");
-		free(line);
-		line = get_next_line(fd[0]);
-	}
 	if (close(fd[0]) == -1)
 		crash("Closing input file");
 	if (close(fd[1]) == -1)

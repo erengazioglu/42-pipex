@@ -8,7 +8,8 @@ SRC		= \
 		main.c
 TESTS	= \
 		perror \
-		fd
+		fd \
+		fork
 
 OBJ				:= $(SRC:%.c=obj/%.o)
 TEST_OBJ		:= $(TESTS:%=obj/%.o)
