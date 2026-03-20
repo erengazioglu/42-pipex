@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 19:39:18 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/18 20:00:22 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/21 00:10:07 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,51 @@ int	crash(char *s)
 	exit(EXIT_FAILURE);
 }
 
+void	init_pid(int *pid)
+{
+	pid = malloc(3 * sizeof(pid_t));
+	pid[2] = 0;
+}
+
+int	pid_len(int *pid)
+{
+	int	i;
+
+	i = 0;
+	while (*pid++)
+		i++;
+	return (i);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	int	status;
-	int	pid[2];
+	int		status;
+	pid_t	pid;
+	int		count;
 	(void) argv;
 	(void) envp;
-	if (argc != 2)
+
+	if (argc < 2)
 	{
 		errno = EINVAL;
 		crash(NULL);
 	}
-	pid[0] = fork();
-	if (pid[0] == -1)
-		crash("fork 1");
-	pid[1] = fork();
-	if (pid[1] == -1)
-		crash("fork 2");
-	if (!pid)
+	count = argc - 1;
+	for (int i = 0; i < count; i++)
 	{
-		wait();
-		ft_printf("I'm the parent\n");
+		pid = fork();
+		if (pid == 0)
+		{
+			sleep(i);
+			ft_printf("I'm child %d\n", i);
+			exit(EXIT_SUCCESS);
+		}
 	}
-	else if (pid == pid[0])
+	if (pid)
 	{
+		for (int i = 0; i < count; i++)
+			wait(&status);
 		sleep(1);
-		ft_printf("I'm child 1\n");
-	}
-	else if (pid == pid[1])
-	{
-		sleep(2);
-		ft_printf("I'm child 2\n");
+		ft_printf("I'm the parent.\n");
 	}
 }

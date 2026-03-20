@@ -3,3 +3,4 @@ pipex
 tests/fork
 tests/perror
 tests/fd
+tests/fork2
