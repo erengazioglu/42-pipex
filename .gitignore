@@ -1,2 +1,5 @@
 obj/
 pipex
+tests/fork
+tests/perror
+tests/fd

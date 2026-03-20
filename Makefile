@@ -9,7 +9,8 @@ SRC		= \
 TESTS	= \
 		perror \
 		fd \
-		fork
+		fork \
+		fork2
 
 OBJ				:= $(SRC:%.c=obj/%.o)
 TEST_OBJ		:= $(TESTS:%=obj/%.o)
