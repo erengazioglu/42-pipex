@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/17 12:25:35 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/21 03:27:38 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,26 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void) argc;
-	(void) envp;
-	int fd = open(argv[1], O_RDONLY);
-	if (fd == -1) {
-		ft_printf("errno = %d\n", errno);
-		perror("");
-		// switch (errno) {
-		// 	case E
-		// }
-	}
-	else {
-		close(fd);
-	}
-	// pid_t	pid;
-	// int		retval;
+	int	pid;
+	int	fds[4];
+	int	status;
+	int	i;
 
-	// pid = fork();
-	// if (pid == -1)
-	// {
-	// 	perror("fork");
-	// 	exit(1);
-	// }
-	// else if (pid == 0)
-	// {
-	// }
-	// else
-	// {
-		
-	// }
+	(void) envp;
+	check_args(argc, argv, fds);
+	i = 1;
+	while (i < argc - 2)
+	{
+		pipe(fds);
+		pid = fork();
+		if (pid == -1)
+			crash("forking");
+		if (pid == 0)
+			child_process(argc, fds, i);
+	}
+	close_all(fds);
+	i = 1;
+	while (i++ < argc - 2)
+		wait(&status);
+	ft_printf("I'm the parent.\n");
 }

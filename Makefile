@@ -5,7 +5,8 @@ LIBS	= libft/libft.a
 INCLUDE = include/pipex.h
 
 SRC		= \
-		main.c
+		main.c \
+		helper.c
 TESTS	= \
 		perror \
 		fd \
