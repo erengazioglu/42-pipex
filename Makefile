@@ -10,7 +10,8 @@ TESTS	= \
 		perror \
 		fd \
 		fork \
-		fork2
+		fork2 \
+		pipe
 
 OBJ				:= $(SRC:%.c=obj/%.o)
 TEST_OBJ		:= $(TESTS:%=obj/%.o)
