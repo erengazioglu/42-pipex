@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/21 03:27:38 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/21 03:32:02 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv, char **envp)
 			crash("forking");
 		if (pid == 0)
 			child_process(argc, fds, i);
+		i++;
 	}
 	close_all(fds);
 	i = 1;
