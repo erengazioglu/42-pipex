@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 00:11:29 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/21 01:57:44 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/21 02:12:04 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int main(int argc, char **argv)
 {
 	int	pid;
 	int	fds[2];
-	// char buffer[30];
 	int	status;
 
 	check_args(argc, argv);
