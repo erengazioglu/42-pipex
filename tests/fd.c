@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:22:47 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/17 17:37:06 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/23 10:36:29 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	main(int argc, char **argv)
 	int		flags[2];
 	
 	if (argc != 3)
+	{
 		errno = EINVAL;
+		crash(NULL);
+	}
 	fd[0] = open(argv[1], O_RDONLY);
 	if (fd[0] == -1)
 		crash("Opening file to read");
@@ -54,5 +57,5 @@ int	main(int argc, char **argv)
 		crash("Closing input file");
 	if (close(fd[1]) == -1)
 		crash("Closing output file");
-	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
