@@ -8,3 +8,4 @@ tests/pipe
 tests/pipe2
 tests/read_fd
 tests/ipc
+outfile
