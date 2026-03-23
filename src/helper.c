@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/22 20:05:56 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/23 12:42:20 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ void	redirect(int argc, int *fds, int i)
 		dup2(fds[1], 0);
 }
 
-void	child_process(int argc, int *fds, int i)
+void	child_process(int argc, char *envp, int *fds, int i)
 {
 	redirect(argc, fds, i);
+	// execve();
 	sleep(1);
 	ft_printf("I'm child %d\n", i);
 	exit(EXIT_SUCCESS);
@@ -66,24 +67,24 @@ void	close_all(int *fds)
 	close(fds[3]);
 }
 
-char	*read_all(int fd, int bufsiz)
-{
-	int		bytes_read;
-	char	*buffer;
-	char	*result;
+// char	*read_all(int fd, int bufsiz)
+// {
+// 	int		bytes_read;
+// 	char	*buffer;
+// 	char	*result;
 
-	buffer = ft_calloc(12, 1);
-	if (!buffer)
-		return (NULL);
-	bytes_read = read(fd, buffer, bufsiz);
-	result = ft_calloc(12, 1);
-	if (!result)
-		return (free(buffer), NULL);
-	ft_strlcpy(result, buffer, bufsiz);
-	while (bytes_read)
-	{
-		result = ft_strnjoin(result, buffer, bytes_read, true);
-		bytes_read = read(fd, buffer, bufsiz);
-	}
-	return result;
-}
+// 	buffer = ft_calloc(12, 1);
+// 	if (!buffer)
+// 		return (NULL);
+// 	bytes_read = read(fd, buffer, bufsiz);
+// 	result = ft_calloc(12, 1);
+// 	if (!result)
+// 		return (free(buffer), NULL);
+// 	ft_strlcpy(result, buffer, bufsiz);
+// 	while (bytes_read)
+// 	{
+// 		result = ft_strnjoin(result, buffer, bytes_read, true);
+// 		bytes_read = read(fd, buffer, bufsiz);
+// 	}
+// 	return result;
+// }

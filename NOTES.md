@@ -82,3 +82,5 @@ protect dup2 like malloc
 
 https://www.amazon.com/exec/obidos/ISBN=0201563177/wrichardstevensA/
 https://linuxcommand.org/tlcl.php
+
+execve(), 32, 426, 514, 563–566, 567–568, 593

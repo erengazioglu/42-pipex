@@ -31,7 +31,28 @@ _(More on this later.)_
 
 ### Implementation
 
-_(More on this later.)_
+Program steps:
+
+**Parent:**  
+- check if argc is good
+- try opening first and last argvs
+- for each other argument:
+    - create a pipe
+    - fork the process
+    - crash if pid == -1
+    - run the child process (they will duplicate fds)
+- close own fds
+- wait for all the children to finish
+- then quit cleanly
+- check if argc is good
+
+**Child:**  
+- close stdin & stdout
+- dup & close parent fds to 0 and 1 (stdin and stdout)
+    - if first child, use fd[2] for input (file read)
+    - if last child, use fd[3] for outfile
+- split its arguments (first word of argument is program, the following are its args)
+- launch the command directly (do you need to read? how does execve work?)
 
 
 ## Instructions

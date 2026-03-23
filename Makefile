@@ -15,7 +15,8 @@ TESTS	= \
 		pipe \
 		pipe2 \
 		ipc \
-		read_fd
+		read_fd \
+		execve
 
 OBJ				:= $(SRC:%.c=obj/%.o)
 TEST_OBJ		:= $(TESTS:%=obj/%.o)
