@@ -13,7 +13,9 @@ TESTS	= \
 		fork \
 		fork2 \
 		pipe \
-		pipe2
+		pipe2 \
+		ipc \
+		read_fd
 
 OBJ				:= $(SRC:%.c=obj/%.o)
 TEST_OBJ		:= $(TESTS:%=obj/%.o)

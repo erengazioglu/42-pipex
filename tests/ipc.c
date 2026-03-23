@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper.c                                           :+:      :+:    :+:   */
+/*   ipc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/22 20:05:56 by egaziogl         ###   ########.fr       */
+/*   Created: 2026/03/21 10:07:36 by egaziogl          #+#    #+#             */
+/*   Updated: 2026/03/22 20:19:44 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,52 +18,19 @@ int crash(char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	check_args(int argc, char **argv, int *fds)
+void	child1(int *fds)
 {
-	if (argc < 5)
-	{
-		errno = EINVAL;
-		crash("Arg check");
-	}
-	fds[2] = open(argv[1], O_RDONLY);
-	if (fds[2] == -1)
-		crash("Open file (read)");
-	fds[3] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
-	if (fds[3] == -1)
-	{
-		close(fds[2]);
-		crash("Open file (write)");
-	}
-}
-
-void	redirect(int argc, int *fds, int i)
-{
-	close(0);
-	close(1);
-	if (i == 0)
-		dup2(fds[2], 0);
-	else
-		dup2(fds[0], 0);
-	if (i == argc - 2)
-		dup2(fds[3], 1);
-	else
-		dup2(fds[1], 0);
-}
-
-void	child_process(int argc, int *fds, int i)
-{
-	redirect(argc, fds, i);
-	sleep(1);
-	ft_printf("I'm child %d\n", i);
-	exit(EXIT_SUCCESS);
-}
-
-void	close_all(int *fds)
-{
+	
 	close(fds[0]);
+	close(1);
+	dup2(fds[1], 1);
 	close(fds[1]);
-	close(fds[2]);
-	close(fds[3]);
+	write(1, "hey (I'm from 1)\n", 18);
+	sleep(1);
+	write(1, "I'm not done yet\n", 18);
+	sleep(1);
+	write(1, "I'm done now!\n", 16);
+	exit(EXIT_SUCCESS);
 }
 
 char	*read_all(int fd, int bufsiz)
@@ -86,4 +53,46 @@ char	*read_all(int fd, int bufsiz)
 		bytes_read = read(fd, buffer, bufsiz);
 	}
 	return result;
+}
+
+void	child2(int *fds)
+{
+	char	*input;
+
+	close(fds[1]);
+	close(0);
+	dup2(fds[0], 0);
+	close(fds[0]);
+	sleep(2);
+	input = read_all(0, 60);
+	ft_printf("I'm from 2:\n%s\n", input);
+	free(input);
+	// write(1, "%s (I'm from 2)\n", 20);
+	sleep(1);
+	exit(EXIT_SUCCESS);
+}
+
+int main(void)
+{
+	int	pid;
+	int	fds[2];
+	int	status;
+
+	pipe(fds);	
+	pid = fork();
+	if (pid == -1)
+		crash("fork 1");
+	if (!pid)
+		child1(fds);
+	pid = fork();
+	if (pid == -1)
+		crash("fork 2");
+	if (!pid)
+		child2(fds);
+	close(fds[0]);
+	close(fds[1]);
+	wait(&status);
+	wait(&status);
+	sleep(1);
+	ft_printf("I'm parent.\n");
 }

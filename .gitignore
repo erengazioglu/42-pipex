@@ -1,8 +1,10 @@
 obj/
 pipex
-tests/fork
 tests/perror
 tests/fd
+tests/fork
 tests/fork2
 tests/pipe
 tests/pipe2
+tests/read_fd
+tests/ipc

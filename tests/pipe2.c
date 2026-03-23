@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 00:11:29 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/21 02:12:04 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/22 19:54:43 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ int crash(char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	check_args(int argc, char **argv)
+void	check_args(int argc, char **argv, int *fds)
 {
 	(void) argv;
+	(void) fds;
 	if (argc < 2)
 	{
 		errno = EINVAL;
@@ -49,7 +50,7 @@ int main(int argc, char **argv)
 	int	fds[2];
 	int	status;
 
-	check_args(argc, argv);
+	check_args(argc, argv, fds);
 	for (int i = 0; i < argc - 1; i++)
 	{
 		pipe(fds);
