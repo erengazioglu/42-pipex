@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/21 03:32:02 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/23 16:13:41 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	pid;
-	int	fds[4];
 	int	status;
 	int	i;
+	t_state	*state;
 
-	(void) envp;
-	check_args(argc, argv, fds);
+	state = init_state(argc, argv);
 	i = 1;
 	while (i < argc - 2)
 	{
-		pipe(fds);
-		pid = fork();
-		if (pid == -1)
+		pipe(state->fds);
+		state->pid = fork();
+		if (state->pid == -1)
 			crash("forking");
-		if (pid == 0)
-			child_process(argc, fds, i);
+		if (state->pid == 0)
+			child_process(state, i);
 		i++;
 	}
-	close_all(fds);
+	close_fds(state);
 	i = 1;
 	while (i++ < argc - 2)
-		wait(&status);
+	{
+		wait(&(state->exit_code));
+		if (state->exit_code)
+			crash("child crashed");
+	}
 	ft_printf("I'm the parent.\n");
 }

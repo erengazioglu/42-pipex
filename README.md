@@ -79,6 +79,7 @@ _(More on this later.)_
     - `man pipe`
     - `man 3 perror`
     - `man 3 write`
+    - `man access`
 - The Linux Programming Interface (book).
 - [Beej's Guide to IPC](https://beej.us/guide/bgipc/html/split/).
 - **Google & Forums:** Heavy use of Google searches, often leading to Stack Overflow and similar forums.
@@ -87,3 +88,68 @@ _(More on this later.)_
     - Helped me find _Beej's guide to IPC_ and _The Linux Programming Interface_ (above).
 - **Fellow 42 students:**
     - Shout out to _sseo_ and _amguinam_ for taking the time to teaching me key concepts!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```c
+
+fd[4];
+fd[2] = open(fichier a lire)
+fd[3] = open(fichier a ecrire)
+fd 0, 1 = pipe
+fd 2, 3 fichiers
+child: 
+    close stdin stdout
+    dup fd0 -> 0 , fd1 -> 1
+    prends les args
+    split pour avoir args[0] ("ls -l")
+    
+
+
+
+```

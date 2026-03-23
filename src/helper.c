@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/23 12:42:20 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/23 16:12:38 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,53 +18,41 @@ int crash(char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	check_args(int argc, char **argv, int *fds)
+t_state	*init_state(int argc, char **argv, char **envp)
 {
+	t_state	*state;
+
 	if (argc < 5)
 	{
 		errno = EINVAL;
 		crash("Arg check");
 	}
-	fds[2] = open(argv[1], O_RDONLY);
-	if (fds[2] == -1)
+	state = ft_calloc(1, sizeof(t_state));
+	state->fds[2] = open(argv[1], O_RDONLY);
+	if (state->fds[2] == -1)
 		crash("Open file (read)");
-	fds[3] = open(argv[argc - 1], O_WRONLY | O_TRUNC);
-	if (fds[3] == -1)
+	state->fds[3] = open(
+		argv[argc - 1], 
+		O_WRONLY | O_TRUNC,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH
+	);
+	if (state->fds[3] == -1)
 	{
-		close(fds[2]);
+		close(state->fds[2]);
 		crash("Open file (write)");
 	}
+	state->argc = argc;
+	state->argv = argv;
+	state->envp = envp;
+	return (state);
 }
 
-void	redirect(int argc, int *fds, int i)
+void	close_fds(t_state *state)
 {
-	close(0);
-	close(1);
-	if (i == 0)
-		dup2(fds[2], 0);
-	else
-		dup2(fds[0], 0);
-	if (i == argc - 2)
-		dup2(fds[3], 1);
-	else
-		dup2(fds[1], 0);
-}
-
-void	child_process(int argc, char *envp, int *fds, int i)
-{
-	redirect(argc, fds, i);
-	// execve();
-	sleep(1);
-	ft_printf("I'm child %d\n", i);
-	exit(EXIT_SUCCESS);
-}
-
-void	close_all(int *fds)
-{
-	close(fds[0]);
-	close(fds[1]);
-	close(fds[2]);
-	close(fds[3]);
+	close(state->fds[0]);
+	close(state->fds[1]);
+	close(state->fds[2]);
+	close(state->fds[3]);
 }
 
 // char	*read_all(int fd, int bufsiz)
