@@ -9,4 +9,5 @@ tests/pipe2
 tests/read_fd
 tests/ipc
 tests/execve
+tests/envp
 outfile

@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 10:07:36 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/22 20:19:44 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/23 20:19:41 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	child1(int *fds)
 	sleep(1);
 	write(1, "I'm not done yet\n", 18);
 	sleep(1);
-	write(1, "I'm done now!\n", 16);
+	write(1, "I'm done now!\n", 14);
 	exit(EXIT_SUCCESS);
 }
 

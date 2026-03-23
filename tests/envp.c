@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/23 20:09:48 by egaziogl         ###   ########.fr       */
+/*   Created: 2026/03/23 20:11:48 by egaziogl          #+#    #+#             */
+/*   Updated: 2026/03/23 22:48:47 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,19 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	status;
-	int	i;
-	t_state	*state;
+	char	**list;
+	(void) argc;
+	(void) argv;
 
-	state = init_state(argc, argv, envp);
-	i = 1;
-	while (i < argc - 2)
+	while (*envp)
 	{
-		pipe(state->fds);
-		state->pid = fork();
-		if (state->pid == -1)
-			crash("forking");
-		if (state->pid == 0)
-			child_process(state, i);
-		i++;
+		if (ft_str_startswith(*envp, "PATH="))
+		{
+			list = ft_split(*envp + 5, ':');
+			break;
+		}
+		envp++;
 	}
-	close_fds(state);
-	i = 1;
-	while (i++ < argc - 2)
-	{
-		wait(&(state->exit_code));
-		if (state->exit_code)
-			crash("child crashed");
-	}
-	ft_printf("I'm the parent.\n");
+	while (*list)
+		ft_printf("%s\n", *list++);
 }
