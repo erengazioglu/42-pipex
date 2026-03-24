@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 19:41:46 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 22:19:49 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	main(int argc, char **argv, char **envp)
 
 	state = init_state(argc, argv, envp);
 	i = 1;
-	while (i < argc - 2)
+	while (i < argc - 2) // i = 1, i = 2
 	{
-		if (i != argc - 3)
+		if (i != argc - 3) // 1 != 2, 2 != 2
 			create_pipe(state);
 		state->pid = fork();
 		if (state->pid == -1)
@@ -39,4 +39,5 @@ int	main(int argc, char **argv, char **envp)
 		// 	crash("child crashed");
 	}
 	// cleanup here
+	ft_printf("parent here\n");
 }
