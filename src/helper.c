@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 13:35:23 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:56:24 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,22 @@ t_state	*init_state(int argc, char **argv, char **envp)
 		crash("Arg check");
 	}
 	state = ft_calloc(1, sizeof(t_state));
-	state->fds[2] = open(argv[1], O_RDONLY);
-	if (state->fds[2] == -1)
+	state->fd[2] = open(argv[1], O_RDONLY);
+	if (state->fd[2] == -1)
 		crash("Open file (read)");
-	state->fds[3] = open(
+	ft_printf("argc: %d\n", argc);
+	ft_printf("argv[argc - 1]: %s\n", argv[argc - 1]);
+	// ft_printf("argc: %d\n");
+	// ft_printf("argc: %d\n");
+
+	state->fd[3] = open(
 		argv[argc - 1], 
 		O_WRONLY | O_TRUNC | O_CREAT,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH
 	);
-	if (state->fds[3] == -1)
+	if (state->fd[3] == -1)
 	{
-		close(state->fds[2]);
+		close(state->fd[2]);
 		crash("Open file (write)");
 	}
 	state->argc = argc;
@@ -49,20 +54,21 @@ t_state	*init_state(int argc, char **argv, char **envp)
 
 void	close_fds(t_state *state)
 {
-	close(state->fds[0]);
-	close(state->fds[1]);
-	close(state->fds[2]);
-	close(state->fds[3]);
+	close(state->fd[0]);
+	close(state->fd[1]);
+	close(state->fd[2]);
+	close(state->fd[3]);
 }
 
-void	create_pipe(t_state *state)
+void	pipe_and_fork(t_state *state)
 {
 	int	fd[2];
 
 	if (pipe(fd) == -1)
 		crash("pipe creation");
-	state->fds[0] = fd[0];
-	state->fds[1] = fd[1];
+	state->fd[0] = fd[0];
+	state->fd[1] = fd[1];
+	state->pid = fork();
 }
 
 // char	*read_all(int fd, int bufsiz)

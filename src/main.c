@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 13:37:27 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:50:55 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	i = 1;
 	while (i < argc - 2)
 	{
-		create_pipe(state);
-		state->pid = fork();
+		pipe_and_fork(state);
 		if (state->pid == -1)
 			crash("fork creation");
 		if (state->pid == 0)
@@ -34,8 +33,8 @@ int	main(int argc, char **argv, char **envp)
 	while (i++ < argc - 2)
 	{
 		wait(&(state->exit_code));
-		if (state->exit_code)
-			crash("child crashed");
+		// if (state->exit_code)
+		// 	crash("child crashed");
 	}
-	ft_printf("I'm the parent.\n");
+	// cleanup here
 }

@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 13:34:01 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:53:41 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,14 @@ void	redirect(t_state *state, int n)
 	close(0);
 	close(1);
 	if (n == 0)
-		dup2(state->fds[2], 0);
+		dup2(state->fd[2], 0);
 	else
-		dup2(state->fds[0], 0);
+		dup2(state->fd[0], 0);
 	if (n == state->argc - 1)
-		dup2(state->fds[3], 1);
+		dup2(state->fd[3], 1);
 	else
-		dup2(state->fds[1], 1);
+		dup2(state->fd[1], 1);
 }
-
-
-// void	extract_args(t_state *state, int n)
-// {
-// 	char	**args;
-// 	args = ft_split(state->argv[n + 2], ' ');
-// }
 
 char	**extract_paths(t_state *state)
 {
