@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 19:44:05 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 19:50:58 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,5 @@ void	child_process(t_state *state, int n) // 1, 2
 	write(1, &num, 1);
 	close(0);
 	close(1);
+	exit(EXIT_SUCCESS);
 }
