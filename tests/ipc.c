@@ -6,11 +6,15 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 10:07:36 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/23 20:19:41 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:34:09 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+/*
+Launch this without arguments
+*/
 
 int crash(char *s)
 {

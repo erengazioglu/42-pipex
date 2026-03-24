@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:22:47 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 15:28:41 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:35:13 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 /*
 Launch this with 2 arguments:
 tests/fd tests/files/infile tests/files/outfile
-
-Examples:
-tests/fd tes
 */
 
 int	crash(char *s)

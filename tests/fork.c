@@ -6,11 +6,16 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 17:33:49 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/23 10:36:14 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:35:12 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+/*
+Launch this with 2 arguments:
+tests/fd tests/files/infile tests/files/outfile
+*/
 
 int crash(char *s)
 {
