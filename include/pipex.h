@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/23 16:14:23 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 13:38:04 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_state {
 	int		exit_code;
 	int		argc;
 	char	**argv;
+	char	**child_args;
 	char	**envp;
 	pid_t	pid;
 }	t_state;
@@ -39,5 +40,6 @@ int		crash(char *s);
 void	child_process(t_state *state, int i);
 void	close_fds(t_state *state);
 t_state	*init_state(int argc, char **argv, char **envp);
+void	create_pipe(t_state *state);
 
 #endif

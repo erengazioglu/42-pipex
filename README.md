@@ -51,8 +51,10 @@ Program steps:
 - dup & close parent fds to 0 and 1 (stdin and stdout)
     - if first child, use fd[2] for input (file read)
     - if last child, use fd[3] for outfile
-- split its arguments (first word of argument is program, the following are its args)
-- launch the command directly (do you need to read? how does execve work?)
+- ft_split its arguments
+- if str does not contain "/", test access() directly
+- else, test access() on each path variable, and return the first good path to run
+- launch execve()
 
 
 ## Instructions

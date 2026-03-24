@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/23 16:12:38 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 13:35:23 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_state	*init_state(int argc, char **argv, char **envp)
 		crash("Open file (read)");
 	state->fds[3] = open(
 		argv[argc - 1], 
-		O_WRONLY | O_TRUNC,
+		O_WRONLY | O_TRUNC | O_CREAT,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH
 	);
 	if (state->fds[3] == -1)
@@ -53,6 +53,16 @@ void	close_fds(t_state *state)
 	close(state->fds[1]);
 	close(state->fds[2]);
 	close(state->fds[3]);
+}
+
+void	create_pipe(t_state *state)
+{
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		crash("pipe creation");
+	state->fds[0] = fd[0];
+	state->fds[1] = fd[1];
 }
 
 // char	*read_all(int fd, int bufsiz)

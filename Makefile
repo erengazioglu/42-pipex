@@ -6,6 +6,7 @@ INCLUDE = include/pipex.h
 
 SRC		= \
 		main.c \
+		child.c \
 		helper.c
 TESTS	= \
 		perror \
