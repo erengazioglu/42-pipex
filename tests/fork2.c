@@ -6,12 +6,17 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 19:39:18 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/21 00:14:33 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:30:17 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 #include <sys/stat.h>
+
+/*
+Launch this with any number of random arguments
+It will spawn as many processes as args
+*/
 
 int	crash(char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:04:05 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 15:24:09 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:27:03 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 #include <sys/stat.h>
 
 /*
-
 Launch this with 3 arguments:
-./execve files/infile command files/outfile
+tests/execve test/files/infile command test/files/outfile
 
+Examples:
+tests/execve test/files/infile "wc -l" test/files/outfile
+tests/execve test/files/infile "cat -e" test/files/outfile
 */
 
 int crash(char *s)
@@ -25,6 +27,7 @@ int crash(char *s)
 	perror(s);
 	exit(EXIT_FAILURE);
 }
+
 void	check_args(int argc, char **argv, int *fds)
 {
 	if (argc != 4)
@@ -109,9 +112,6 @@ char	**extract_paths(char **envp, char *fn)
 	}
 	return (paths);
 }
-
-
-
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,12 +6,20 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:22:47 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/23 14:23:14 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:28:41 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 #include <sys/stat.h>
+
+/*
+Launch this with 2 arguments:
+tests/fd tests/files/infile tests/files/outfile
+
+Examples:
+tests/fd tes
+*/
 
 int	crash(char *s)
 {
@@ -39,7 +47,6 @@ void	copy(int *fd)
 int	main(int argc, char **argv)
 {
 	int		fd[2];
-	// int		flags[2];
 	
 	if (argc != 3)
 	{

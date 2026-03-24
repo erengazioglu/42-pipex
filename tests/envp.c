@@ -6,14 +6,12 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 20:11:48 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 13:39:40 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 15:29:21 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-
 Launch this without arguments, it will print out the PATH variable.
-
 */
 
 #include "../include/pipex.h"
