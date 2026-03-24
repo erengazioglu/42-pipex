@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 16:02:03 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 19:29:30 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	close_fds(t_state *state)
 	close(state->fd[3]);
 }
 
-void	pipe_and_fork(t_state *state)
+void	create_pipe(t_state *state)
 {
 	int	fd[2];
 
@@ -63,5 +63,4 @@ void	pipe_and_fork(t_state *state)
 		crash("pipe creation");
 	state->fd[0] = fd[0];
 	state->fd[1] = fd[1];
-	state->pid = fork();
 }

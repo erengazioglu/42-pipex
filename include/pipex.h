@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 15:51:59 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 19:41:33 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_state {
 int		crash(char *s);
 void	close_fds(t_state *state);
 t_state	*init_state(int argc, char **argv, char **envp);
-void	pipe_and_fork(t_state *state);
+void	create_pipe(t_state *state);
 
 // child.c
 void	child_process(t_state *state, int i);
