@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 15:56:24 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 16:02:03 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ t_state	*init_state(int argc, char **argv, char **envp)
 	state->fd[2] = open(argv[1], O_RDONLY);
 	if (state->fd[2] == -1)
 		crash("Open file (read)");
-	ft_printf("argc: %d\n", argc);
-	ft_printf("argv[argc - 1]: %s\n", argv[argc - 1]);
-	// ft_printf("argc: %d\n");
-	// ft_printf("argc: %d\n");
-
 	state->fd[3] = open(
 		argv[argc - 1], 
 		O_WRONLY | O_TRUNC | O_CREAT,
@@ -70,25 +65,3 @@ void	pipe_and_fork(t_state *state)
 	state->fd[1] = fd[1];
 	state->pid = fork();
 }
-
-// char	*read_all(int fd, int bufsiz)
-// {
-// 	int		bytes_read;
-// 	char	*buffer;
-// 	char	*result;
-
-// 	buffer = ft_calloc(12, 1);
-// 	if (!buffer)
-// 		return (NULL);
-// 	bytes_read = read(fd, buffer, bufsiz);
-// 	result = ft_calloc(12, 1);
-// 	if (!result)
-// 		return (free(buffer), NULL);
-// 	ft_strlcpy(result, buffer, bufsiz);
-// 	while (bytes_read)
-// 	{
-// 		result = ft_strnjoin(result, buffer, bytes_read, true);
-// 		bytes_read = read(fd, buffer, bufsiz);
-// 	}
-// 	return result;
-// }

@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 15:53:41 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/24 16:00:33 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,8 @@ char	**extract_paths(t_state *state)
 
 void	child_process(t_state *state, int n)
 {
-	// char	**paths;
-
-	// ft_printf("I'm running lol\n");
 	redirect(state, n);
-	ft_printf("something\n");
-	// state->child_args = ft_split(state->argv[n + 2], ' ');
-	// paths = extract_paths(state);
-	// while (*paths)
-	// {
-	// 	// ft_printf("%s\n", *paths++);
-	// }
+	write(1, "something\n", 10);
 	close(0);
 	close(1);
-	// execve(*args, args + 1, state->envp);
-	// sleep(1);
-	// crash("child ");
 }
