@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 14:37:19 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 16:09:04 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@ t_state	*init_state(int argc, char **argv, char **envp)
 	if (!state)
 		crash(NULL, ERR_MALLOC);
 	state->fd[2] = open(argv[1], O_RDONLY);
-	if (state->fd[2] == -1)
-		crash(state, ERR_OPENR);
 	state->fd[3] = open(
 		argv[argc - 1], 
 		O_WRONLY | O_TRUNC | O_CREAT,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH
 	);
-	if (state->fd[3] == -1)
-		crash(state, ERR_OPENW);
 	state->argc = argc;
 	state->argv = argv;
 	state->envp = envp;

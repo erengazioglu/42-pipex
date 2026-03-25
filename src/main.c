@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 15:50:06 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 16:00:07 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ int	main(int argc, char **argv, char **envp)
 		if (wait(&(state->exit_code)) == state->pid)
 			retval = state->exit_code;
 	}
-	free(state);
-	return (retval);
+	return (free(state), retval);
 }
