@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 11:58:36 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 12:07:36 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	i = 1;
 	while (i < argc - 2)
 	{
-		if (i != argc - 3) // if not last child
+		if (i != argc - 3)
 			create_pipe(state);
 		state->pid = fork();
 		if (state->pid == -1)
@@ -30,14 +30,9 @@ int	main(int argc, char **argv, char **envp)
 			child_process(state, i);
 		i++;
 	}
-	close(state->fd[1]);
-	close(state->fd[2]);
+	close_fds(state);
 	i = 1;
 	while (i++ < argc - 2)
-	{
 		wait(&(state->exit_code));
-		// if (state->exit_code)
-		// 	crash("child crashed");
-	}
 	ft_printf("parent cleanup here\n");
 }
