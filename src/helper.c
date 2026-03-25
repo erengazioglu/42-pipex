@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 16:09:04 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:26:56 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ t_state	*init_state(int argc, char **argv, char **envp)
 	state = ft_calloc(1, sizeof(t_state));
 	if (!state)
 		crash(NULL, ERR_MALLOC);
-	state->fd[2] = open(argv[1], O_RDONLY);
-	state->fd[3] = open(
-		argv[argc - 1], 
-		O_WRONLY | O_TRUNC | O_CREAT,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH
-	);
 	state->argc = argc;
 	state->argv = argv;
 	state->envp = envp;
@@ -37,8 +31,6 @@ void	close_fds(t_state *state)
 {
 	close(state->fd[0]);
 	close(state->fd[1]);
-	close(state->fd[2]);
-	close(state->fd[3]);
 }
 
 void	create_pipe(t_state *state)

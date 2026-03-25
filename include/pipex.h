@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 15:50:16 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:25:00 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 
-# define FLAG_READ	0x01
-# define FLAG_WRITE	0x02
+# define FLAG_READ	0
+# define FLAG_WRITE	1
 
 typedef struct s_state {
-	int		fd[4];
+	int		fd[2];
 	int		exit_code;
 	int		argc;
 	char	**argv;

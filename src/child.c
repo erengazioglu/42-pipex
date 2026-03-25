@@ -6,34 +6,47 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 16:08:57 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:31:45 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
+static void	open_file(t_state *state, int flag)
+{
+	int	fd;
+
+	if (flag == FLAG_READ)
+	{
+		fd = open(state->argv[1], O_RDONLY);
+		if (fd == -1)
+			crash(state, ERR_OPENR);
+	}
+	else if (flag == FLAG_WRITE)
+	{
+		fd = open(state->argv[state->argc - 1], 
+			O_WRONLY | O_TRUNC | O_CREAT,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH
+		);
+		if (fd == -1)
+			crash(state, ERR_OPENW);
+	}
+	fd = dup2(fd, flag);
+	if (fd == -1)
+		crash(state, ERR_DUP2);
+	close(fd);
+}
+
 static void	redirect(t_state *state, int n)
 {
 	int	fd;
 
-	close(0);
-	close(1);
 	if (n == 1)
-	{
-		if (state->fd[2] == -1)
-			crash(state, ERR_OPENR);
-		fd = dup2(state->fd[2], 0);
-	}
+		open_file(state, FLAG_READ);
 	else
 		fd = dup2(state->fd[0], 0);
-	if (fd == -1)
-		crash(state, ERR_DUP2);
 	if (n == state->argc - 3)
-	{
-		if (state->fd[3] == -1)
-			crash(state, ERR_OPENW);
-		dup2(state->fd[3], 1);
-	}
+		open_file(state, FLAG_WRITE);
 	else
 		dup2(state->fd[1], 1);
 	if (fd == -1)
