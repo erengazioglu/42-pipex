@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 10:38:52 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 15:50:16 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,23 @@ typedef struct s_state {
 	pid_t	pid;
 }	t_state;
 
+typedef enum e_err {
+	ERR_NONE,
+	ERR_ARGS,
+	ERR_MALLOC,
+	ERR_OPENR,
+	ERR_OPENW,
+
+	ERR_PIPE,
+	ERR_FORK,
+	ERR_DUP2,
+
+	ERR_STR,
+	ERR_PATH,
+	ERR_EXEC
+}	t_err;
+
 // helper.c
-int		crash(char *s);
 void	close_fds(t_state *state);
 t_state	*init_state(int argc, char **argv, char **envp);
 void	create_pipe(t_state *state);
@@ -44,5 +59,8 @@ char	*ft_pathjoin(char *s1, char *s2, bool free_s1);
 
 // child.c
 void	child_process(t_state *state, int i);
+
+// cleanup.c
+int		crash(t_state *state, t_err err);
 
 #endif

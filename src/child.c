@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 12:07:08 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 14:57:32 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 static void	redirect(t_state *state, int n)
 {
+	int	fd;
+
 	close(0);
 	close(1);
 	if (n == 1)
-		dup2(state->fd[2], 0);
+		fd = dup2(state->fd[2], 0);
 	else
-		dup2(state->fd[0], 0);
+		fd = dup2(state->fd[0], 0);
+	if (fd == -1)
+		crash(state, ERR_DUP2);
 	if (n == state->argc - 3)
 		dup2(state->fd[3], 1);
 	else
 		dup2(state->fd[1], 1);
+	if (fd == -1)
+		crash(state, ERR_DUP2);
 	close_fds(state);
 }
 
@@ -43,12 +49,14 @@ static char	**extract_paths(t_state *state)
 		}
 		i++;
 		if (!state->envp[i])
-			crash("path loop end");
+			crash(state, ERR_PATH);
 	}
 	i = 0;
 	while (paths[i])
 	{
 		paths[i] = ft_pathjoin(paths[i], state->child_args[0], true);
+		if (!paths[i])
+			crash(state, ERR_STR);
 		i++;
 	}
 	return (paths);
@@ -61,7 +69,7 @@ void	child_process(t_state *state, int n)
 	
 	args = ft_split(state->argv[n + 1], ' ');
 	if (!args)
-		crash("ft_split on state->argv");
+		crash(state, ERR_STR);
 	redirect(state, n);
 	if (ft_strchr(*args, '/'))
 		execve(*args, args, state->envp);
@@ -72,5 +80,5 @@ void	child_process(t_state *state, int n)
 		args[0] = paths[i];
 		execve(*args, args, state->envp);
 	}
-	crash("child execve");
+	crash(state, ERR_EXEC);
 }

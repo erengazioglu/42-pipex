@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 12:07:36 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 15:50:06 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	i;
+	int		i;
+	int		retval;
 	t_state	*state;
 
 	state = init_state(argc, argv, envp);
@@ -25,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 			create_pipe(state);
 		state->pid = fork();
 		if (state->pid == -1)
-			crash("forking");
+			crash(state, ERR_FORK);
 		if (state->pid == 0)
 			child_process(state, i);
 		i++;
@@ -33,6 +34,10 @@ int	main(int argc, char **argv, char **envp)
 	close_fds(state);
 	i = 1;
 	while (i++ < argc - 2)
-		wait(&(state->exit_code));
-	ft_printf("parent cleanup here\n");
+	{
+		if (wait(&(state->exit_code)) == state->pid)
+			retval = state->exit_code;
+	}
+	free(state);
+	return (retval);
 }

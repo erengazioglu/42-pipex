@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
+/*   Updated: 2026/03/25 15:58:27 by egaziogl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/pipex.h"
+
+static void	handle_init_crash(t_state *state, t_err err)
+{
+	(void) err;
+	(void) state;
+	perror("init");
+}
+static void	handle_spawn_crash(t_state *state, t_err err)
+{
+	(void) err;
+	(void) state;
+	perror("spawn");
+}
+
+static void	handle_child_crash(t_state *state, t_err err)
+{
+	(void) err;
+	(void) state;
+	perror("child");
+}
+
+int crash(t_state *state, t_err err)
+{
+	if (err <= ERR_OPENW)
+		handle_init_crash(state, err);
+	else if (err <= ERR_DUP2)
+		handle_spawn_crash(state, err);
+	else if (err <= ERR_EXEC)
+		handle_child_crash(state, err);
+	free(state);
+	if (errno == EACCES || errno == EISDIR || errno == ENOEXEC)
+		exit(126);
+	if (errno == ENOENT)
+		exit(127);
+	exit(1);
+}

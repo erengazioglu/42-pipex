@@ -6,41 +6,31 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 10:26:02 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 14:37:19 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
-
-int crash(char *s)
-{
-	perror(s);
-	exit(EXIT_FAILURE);
-}
 
 t_state	*init_state(int argc, char **argv, char **envp)
 {
 	t_state	*state;
 
 	if (argc < 5)
-	{
-		errno = EINVAL;
-		crash("Arg check");
-	}
+		crash(NULL, ERR_ARGS);
 	state = ft_calloc(1, sizeof(t_state));
+	if (!state)
+		crash(NULL, ERR_MALLOC);
 	state->fd[2] = open(argv[1], O_RDONLY);
 	if (state->fd[2] == -1)
-		crash("Open file (read)");
+		crash(state, ERR_OPENR);
 	state->fd[3] = open(
 		argv[argc - 1], 
 		O_WRONLY | O_TRUNC | O_CREAT,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH
 	);
 	if (state->fd[3] == -1)
-	{
-		close(state->fd[2]);
-		crash("Open file (write)");
-	}
+		crash(state, ERR_OPENW);
 	state->argc = argc;
 	state->argv = argv;
 	state->envp = envp;
@@ -60,7 +50,7 @@ void	create_pipe(t_state *state)
 	int	fd[2];
 
 	if (pipe(fd) == -1)
-		crash("pipe creation");
+		crash(state, ERR_PIPE);
 	state->fd[0] = fd[0];
 	state->fd[1] = fd[1];
 }
