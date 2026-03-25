@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 17:31:45 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:35:12 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	open_file(t_state *state, int flag)
 {
 	int	fd;
+	int	fd_keep;
 
 	if (flag == FLAG_READ)
 	{
@@ -31,8 +32,8 @@ static void	open_file(t_state *state, int flag)
 		if (fd == -1)
 			crash(state, ERR_OPENW);
 	}
-	fd = dup2(fd, flag);
-	if (fd == -1)
+	fd_keep = dup2(fd, flag);
+	if (fd_keep == -1)
 		crash(state, ERR_DUP2);
 	close(fd);
 }
