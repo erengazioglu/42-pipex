@@ -6,13 +6,13 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 22:36:26 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 10:43:47 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	redirect(t_state *state, int n) // 1, 2
+static void	redirect(t_state *state, int n)
 {
 	close(0);
 	close(1);
@@ -20,13 +20,13 @@ void	redirect(t_state *state, int n) // 1, 2
 		dup2(state->fd[2], 0);
 	else
 		dup2(state->fd[0], 0);
-	if (n == state->argc - 3) //1 == 2, 2 == 2
+	if (n == state->argc - 3)
 		dup2(state->fd[3], 1);
 	else
 		dup2(state->fd[1], 1);
 }
 
-char	**extract_paths(t_state *state)
+static char	**extract_paths(t_state *state)
 {
 	char	**paths;
 	int		i;
@@ -47,13 +47,10 @@ char	**extract_paths(t_state *state)
 			crash("path loop end");
 	}
 	i = 0;
-	// ft_printf("%s\n", *paths);
-	// ft_printf("%s\n", *(paths + 1));
-
 	while (paths[i])
 	{
 		ft_printf("path %d: %s\n", i, paths[i]);
-		paths[i] = ft_strnjoin(paths[i], state->child_args[0], 5, true);
+		paths[i] = ft_pathjoin(paths[i], state->child_args[0], true);
 		ft_printf("it became %s\n", paths[i]);
 		i++;
 	}
@@ -62,11 +59,9 @@ char	**extract_paths(t_state *state)
 
 void	child_process(t_state *state, int n) // 1, 2
 {
-	char	num;
 	char	**paths;
 	char	**args;
 	
-	num = '0' + n;
 	args = ft_split(state->argv[n + 1], ' ');
 	if (!args)
 		crash("ft_split on state->argv");

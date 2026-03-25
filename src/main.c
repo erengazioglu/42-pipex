@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 22:19:49 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 10:39:27 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ int	main(int argc, char **argv, char **envp)
 		// if (state->exit_code)
 		// 	crash("child crashed");
 	}
-	// cleanup here
-	ft_printf("parent here\n");
+	ft_printf("parent cleanup here\n");
 }

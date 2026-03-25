@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/24 19:29:30 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 10:26:02 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,32 @@ void	create_pipe(t_state *state)
 		crash("pipe creation");
 	state->fd[0] = fd[0];
 	state->fd[1] = fd[1];
+}
+
+char	*ft_pathjoin(char *s1, char *s2, bool free_s1)
+{
+	char	*result;
+	char	*result_base;
+	char	*s1_base;
+
+	if (ft_strchr(s2, '/'))
+		return (NULL);
+	result = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
+	if (!result)
+	{
+		if (free_s1)
+			free(s1);
+		return (NULL);
+	}
+	result_base = result;
+	s1_base = s1;
+	while (*s1)
+		*(result++) = *(s1++);
+	*(result++) = '/';
+	while (*s2)
+		*(result++) = *(s2++);
+	*result = '\0';
+	if (free_s1)
+		free(s1_base);
+	return (result_base);
 }
