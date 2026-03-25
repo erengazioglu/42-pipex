@@ -89,7 +89,7 @@ _(More on this later.)_
 - **AI:**
     - Helped me find _Beej's guide to IPC_ and _The Linux Programming Interface_ (above).
 - **Fellow 42 students:**
-    - Shout out to _sseo_ and _amguinam_ for taking the time to teaching me key concepts!
+    - Shout out to _sseo, amguinam, nfenollo, iargence_ for taking the time to teaching me key concepts!
 
 
 
