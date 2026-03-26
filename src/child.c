@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 17:35:26 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:49:54 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	child_process(t_state *state, int n)
 	if (!args)
 		crash(state, ERR_STR);
 	if (!(*args))
-		crash(state, ERR_CMDEMPTY);
+		crash(state, ERR_CMDNOTFOUND);
 	redirect(state, n);
 	if (ft_strchr(*args, '/'))
 	{

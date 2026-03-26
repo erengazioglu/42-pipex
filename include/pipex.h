@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 17:05:40 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:54:53 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef enum e_err {
 	ERR_FORK,
 	ERR_DUP2,
 	ERR_STR,
-	ERR_PATH,
 	ERR_EXEC,
 	ERR_CMDNOTFOUND,
 	ERR_CMDDENIED,

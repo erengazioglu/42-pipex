@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 17:35:18 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 18:06:27 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ static t_err	handle_init_crash(t_state *state, t_err err)
 		errno = EINVAL;
 	if (err == ERR_MALLOC)
 		errno = ENOMEM;
+	// if (err == ERR_OPENW)
+		
 	(void) state;
 	perror("init");
-	return (ERR_NONE);
+	return (err);
 }
 static t_err	handle_spawn_crash(t_state *state, t_err err)
 {
@@ -39,8 +41,6 @@ static t_err	handle_child_crash(t_state *state, t_err err)
 		errno = EACCES;
 		perror(NULL);
 	}
-	else if (err == ERR_CMDEMPTY)
-		write(2, "permission denied\n", 18);
 	else
 		perror(NULL);
 	close_fds(state);
@@ -60,6 +60,8 @@ int crash(t_state *state, t_err err)
 	else
 		custom_err = handle_child_crash(state, err);
 	free(state);
+	if (custom_err == ERR_OPENW)
+		exit(1);
 	if (custom_err == ERR_CMDNOTFOUND)
 		exit(127);
 	if (custom_err == ERR_CMDEMPTY || 

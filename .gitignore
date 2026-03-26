@@ -7,3 +7,4 @@ pipex_tester/
 tester_pipex.sh
 outf
 vlg.txt
+tests/in/noperms.txt
