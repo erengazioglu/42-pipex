@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 17:50:57 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:07:49 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	handle_init_crash(t_state *state, t_err err)
 	if (err == ERR_MALLOC)
 		errno = ENOMEM;
 	(void) state;
-	perror(NULL);
+	perror("init");
 }
 static void	handle_spawn_crash(t_state *state, t_err err)
 {
@@ -44,6 +44,7 @@ static void	handle_child_crash(t_state *state, t_err err)
 
 int crash(t_state *state, t_err err)
 {
+	state->last_errno = errno;
 	if (err <= ERR_OPENW)
 		handle_init_crash(state, err);
 	else if (err <= ERR_DUP2)

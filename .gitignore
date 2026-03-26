@@ -3,3 +3,7 @@ pipex
 infile
 outfile
 infiles/
+pipex_tester/
+tester_pipex.sh
+outf
+vlg.txt

@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 17:25:00 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:06:44 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 typedef struct s_state {
 	int		fd[2];
+	int		last_errno;
 	int		exit_code;
 	int		argc;
 	char	**argv;
