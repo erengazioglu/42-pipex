@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 17:25:33 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:50:57 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,5 @@ int crash(t_state *state, t_err err)
 		exit(127);
 	exit(1);
 }
+
+// int

@@ -6,11 +6,20 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 17:26:54 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:18:16 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+int	get_exit_code(t_state *state)
+{
+	if (WIFSIGNALED(state->exit_code))
+		return (128 + WTERMSIG(state->exit_code));
+	if (WIFEXITED(state->exit_code))
+		return (WEXITSTATUS(state->exit_code));
+	return (1);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -36,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	while (i++ < argc - 2)
 	{
 		if (wait(&(state->exit_code)) == state->pid)
-			retval = state->exit_code;
+			retval = get_exit_code(state);
 	}
 	return (free(state), retval);
 }
