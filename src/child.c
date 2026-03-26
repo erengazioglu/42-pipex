@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 18:19:25 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 18:37:20 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,28 +105,26 @@ static char	**extract_paths(t_state *state)
 void	child_process(t_state *state, int n)
 {
 	char	**paths;
-	char	**args;
 	
-	args = ft_split(state->argv[n + 1], ' ');
-	if (!args)
+	state->child_args = ft_split(state->argv[n + 1], ' ');
+	if (!state->child_args)
 		crash(state, ERR_STR);
-	if (!(*args))
+	if (!(*(state->child_args)))
 		crash(state, ERR_CMDNOTFOUND);
 	redirect(state, n);
-	if (ft_strchr(*args, '/'))
+	if (ft_strchr(*state->child_args, '/'))
 	{
-		execve(*args, args, state->envp);
+		execve(state->child_args[0], state->child_args, state->envp);
 		crash(state, ERR_EXEC);
 	}
 	if (!*(state->envp))
 		crash(state, ERR_CMDNOTFOUND);
-	state->child_args = args;
 	paths = extract_paths(state);
 	check_paths(state, paths);
 	for (int i = 0; paths[i]; i++)
 	{
-		args[0] = paths[i];
-		execve(*args, args, state->envp);
+		state->child_args[0] = paths[i];
+		execve(state->child_args[0], state->child_args, state->envp);
 	}
 	crash(state, ERR_EXEC);
 }
