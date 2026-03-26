@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 14:57:17 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:35:26 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,22 @@ static void	open_file(t_state *state, int flag)
 	if (fd_keep == -1)
 		crash(state, ERR_DUP2);
 	close(fd);
+}
+
+static void	check_paths(t_state *state, char **paths)
+{
+	int	result;
+
+	result = -1;
+	for (int i = 0; paths[i] && result; i++)
+		result &= access(paths[i], F_OK);
+	if (result == -1)
+		crash(state, ERR_CMDNOTFOUND);
+	result = -1;
+	for (int i = 0; paths[i] && result; i++)
+		result &= access(paths[i], X_OK);
+	if (result == -1)
+		crash(state, ERR_CMDDENIED);
 }
 
 static void	redirect(t_state *state, int n)
@@ -72,14 +88,14 @@ static char	**extract_paths(t_state *state)
 		}
 		i++;
 		if (!state->envp[i])
-			crash(state, ERR_PATH);
+			crash(state, ERR_CMDNOTFOUND);
 	}
 	i = 0;
 	while (paths[i])
 	{
 		paths[i] = ft_pathjoin(paths[i], state->child_args[0], true);
 		if (!paths[i])
-			crash(state, ERR_STR);
+			crash(state, ERR_MALLOC);
 		i++;
 	}
 	return (paths);
@@ -93,11 +109,19 @@ void	child_process(t_state *state, int n)
 	args = ft_split(state->argv[n + 1], ' ');
 	if (!args)
 		crash(state, ERR_STR);
+	if (!(*args))
+		crash(state, ERR_CMDEMPTY);
 	redirect(state, n);
 	if (ft_strchr(*args, '/'))
+	{
 		execve(*args, args, state->envp);
+		crash(state, ERR_EXEC);
+	}
+	if (!*(state->envp))
+		crash(state, ERR_CMDNOTFOUND);
 	state->child_args = args;
 	paths = extract_paths(state);
+	check_paths(state, paths);
 	for (int i = 0; paths[i]; i++)
 	{
 		args[0] = paths[i];

@@ -6,13 +6,13 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 15:20:35 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:35:18 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-static void	handle_init_crash(t_state *state, t_err err)
+static t_err	handle_init_crash(t_state *state, t_err err)
 {
 	if (err == ERR_ARGS)
 		errno = EINVAL;
@@ -20,39 +20,50 @@ static void	handle_init_crash(t_state *state, t_err err)
 		errno = ENOMEM;
 	(void) state;
 	perror("init");
+	return (ERR_NONE);
 }
-static void	handle_spawn_crash(t_state *state, t_err err)
+static t_err	handle_spawn_crash(t_state *state, t_err err)
 {
-	if (err == ERR_PIPE)
-		// nothing happens
 	if (err > ERR_PIPE)
-	{
 		close_fds(state);
-	}
-		// close pipe and crash!
-	(void) err;
-	(void) state;
 	perror("spawn");
+	return (ERR_NONE);
 }
 
-static void	handle_child_crash(t_state *state, t_err err)
+static t_err	handle_child_crash(t_state *state, t_err err)
 {
-	(void) err;
-	(void) state;
-	perror("child");
+	if (err == ERR_CMDNOTFOUND)
+		write(2, "command not found\n", 18);
+	else if (err == ERR_CMDDENIED)
+	{
+		errno = EACCES;
+		perror(NULL);
+	}
+	else if (err == ERR_CMDEMPTY)
+		write(2, "permission denied\n", 18);
+	else
+		perror(NULL);
+	close_fds(state);
+	return (err);
 }
 
 int crash(t_state *state, t_err err)
 {
-	int	lasterr = errno;
+	int		lasterr;
+	t_err	custom_err;
+	
+	lasterr = errno;
 	if (err <= ERR_OPENW)
-		handle_init_crash(state, err);
+		custom_err = handle_init_crash(state, err);
 	else if (err <= ERR_DUP2)
-		handle_spawn_crash(state, err);
-	else if (err <= ERR_EXEC)
-		handle_child_crash(state, err);
+		custom_err = handle_spawn_crash(state, err);
+	else
+		custom_err = handle_child_crash(state, err);
 	free(state);
-	if (lasterr == EACCES || lasterr == EISDIR || lasterr == ENOEXEC)
+	if (custom_err == ERR_CMDNOTFOUND)
+		exit(127);
+	if (custom_err == ERR_CMDEMPTY || 
+		lasterr == EACCES || lasterr == EISDIR || lasterr == ENOEXEC)
 		exit(126);
 	if (lasterr == ENOENT)
 		exit(127);
