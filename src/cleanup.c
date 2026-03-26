@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 18:06:27 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 18:22:02 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static t_err	handle_init_crash(t_state *state, t_err err)
 		errno = EINVAL;
 	if (err == ERR_MALLOC)
 		errno = ENOMEM;
-	// if (err == ERR_OPENW)
+	if (err == ERR_OPENR)
+		close_fds(state);
+	if (err == ERR_OPENW)
+		close(state->fd[1]);
 		
 	(void) state;
 	perror("init");

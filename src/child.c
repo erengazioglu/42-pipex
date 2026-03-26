@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 17:49:54 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 18:19:25 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ static void	redirect(t_state *state, int n)
 		open_file(state, FLAG_READ);
 	else
 		fd = dup2(state->fd[0], 0);
+	close(state->fd[0]);
 	if (n == state->argc - 3)
 		open_file(state, FLAG_WRITE);
 	else
-		dup2(state->fd[1], 1);
+		fd = dup2(state->fd[1], 1);
+	close(state->fd[1]);
 	if (fd == -1)
 		crash(state, ERR_DUP2);
-	close_fds(state);
 }
 
 static char	**extract_paths(t_state *state)
