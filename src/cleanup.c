@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 15:07:49 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:20:35 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	handle_child_crash(t_state *state, t_err err)
 
 int crash(t_state *state, t_err err)
 {
-	state->last_errno = errno;
+	int	lasterr = errno;
 	if (err <= ERR_OPENW)
 		handle_init_crash(state, err);
 	else if (err <= ERR_DUP2)
@@ -52,9 +52,9 @@ int crash(t_state *state, t_err err)
 	else if (err <= ERR_EXEC)
 		handle_child_crash(state, err);
 	free(state);
-	if (errno == EACCES || errno == EISDIR || errno == ENOEXEC)
+	if (lasterr == EACCES || lasterr == EISDIR || lasterr == ENOEXEC)
 		exit(126);
-	if (errno == ENOENT)
+	if (lasterr == ENOENT)
 		exit(127);
 	exit(1);
 }
