@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 11:19:06 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 15:47:48 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define FLAG_WRITE	1
 
 typedef struct s_state {
-	int		fd[2];
+	int		fd[3];
 	int		exit_code;
 	int		argc;
 	char	**argv;
@@ -52,9 +52,9 @@ typedef enum e_err {
 }	t_err;
 
 // helper.c
-void	close_fds(t_state *state);
+void	close_fds(t_state *state, bool all);
 t_state	*init_state(int argc, char **argv, char **envp);
-void	create_pipe(t_state *state);
+void	create_pipe(t_state *state, int n);
 char	*ft_pathjoin(char *s1, char *s2, bool free_s1);
 void	free_strlist(char **list);
 

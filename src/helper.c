@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 00:06:17 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:07:18 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,26 @@ t_state	*init_state(int argc, char **argv, char **envp)
 	state->argc = argc;
 	state->argv = argv;
 	state->envp = envp;
+	state->fd[0] = -2;
+	state->fd[1] = -2;
+	state->fd[2] = -2;
 	return (state);
 }
 
-void	close_fds(t_state *state)
+void	close_fds(t_state *state, bool all)
 {
 	close(state->fd[0]);
 	close(state->fd[1]);
+	if (all)
+		close(state->fd[2]);
 }
 
-void	create_pipe(t_state *state)
+void	create_pipe(t_state *state, int n)
 {
 	int	fd[2];
 
+	if (n == state->argc - 3)
+		return;
 	if (pipe(fd) == -1)
 		crash(state, ERR_PIPE);
 	state->fd[0] = fd[0];

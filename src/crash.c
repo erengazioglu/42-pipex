@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 11:21:06 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:21:00 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,19 @@ static t_err	handle_init_crash(t_err err)
 
 static t_err	handle_open_crash(t_state *state, t_err err)
 {
-	if (err == ERR_OPENR)
-		close_fds(state);
+	// if (err == ERR_OPENR)
+	// 	close_fds(state, false);
 	if (err == ERR_OPENW)
-		close(state->fd[1]);
+		close(state->fd[2]);
 	free_strlist(state->child_args);
 	perror("open");
 	return (err);
 }
 static t_err	handle_spawn_crash(t_state *state, t_err err)
 {
-	if (err > ERR_PIPE)
-		close_fds(state);
+	// if (err > ERR_PIPE)
+		// close_fds(state, false);
+	(void) err;
 	free_strlist(state->child_args);
 	perror("spawn");
 	return (ERR_NONE);
@@ -48,12 +49,12 @@ static t_err	handle_child_crash(t_state *state, t_err err)
 	else if (err == ERR_CMDDENIED)
 	{
 		errno = EACCES;
-		perror(NULL);
+		perror("child denied");
 	}
 	else
-		perror(NULL);
+		perror("child");
 	free_strlist(state->child_args);
-	close_fds(state);
+	// close_fds(state, false);
 	return (err);
 }
 
