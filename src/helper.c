@@ -6,11 +6,18 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/25 17:26:56 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 00:06:17 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+void	free_strlist(char **list)
+{
+	for (int i = 0; list[i]; i++)
+		free(list[i]);
+	free(list);
+}
 
 t_state	*init_state(int argc, char **argv, char **envp)
 {

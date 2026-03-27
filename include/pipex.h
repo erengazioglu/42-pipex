@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 17:54:53 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 10:34:17 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void	close_fds(t_state *state);
 t_state	*init_state(int argc, char **argv, char **envp);
 void	create_pipe(t_state *state);
 char	*ft_pathjoin(char *s1, char *s2, bool free_s1);
+void	free_strlist(char **list);
 
 // child.c
 void	child_process(t_state *state, int i);
 
-// cleanup.c
+// crash.c
 int		crash(t_state *state, t_err err);
 
 #endif

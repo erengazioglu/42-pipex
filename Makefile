@@ -8,7 +8,7 @@ SRC		= \
 		main.c \
 		child.c \
 		helper.c \
-		cleanup.c
+		crash.c
 
 OBJ				:= $(SRC:%.c=obj/%.o)
 TEST_OBJ		:= $(TESTS:%=obj/%.o)

@@ -1,46 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   crash.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 18:40:14 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 10:34:06 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-static t_err	handle_open_crash(t_state *state, t_err err)
+static t_err	handle_init_crash(t_err err)
 {
 	if (err == ERR_ARGS)
 		errno = EINVAL;
 	if (err == ERR_MALLOC)
 		errno = ENOMEM;
-	if (err == ERR_OPENR)
-		close_fds(state);
-	if (err == ERR_OPENW)
-		close(state->fd[1]);
-	if (err == ERR_OPENR || err == ERR_OPENW)
-		free(state->child_args);
 	perror("init");
 	return (err);
 }
 
-static t_err	handle_init_crash(t_state *state, t_err err)
+static t_err	handle_open_crash(t_state *state, t_err err)
 {
-	if (err == ERR_ARGS)
-		errno = EINVAL;
-	if (err == ERR_MALLOC)
-		errno = ENOMEM;
 	if (err == ERR_OPENR)
 		close_fds(state);
 	if (err == ERR_OPENW)
 		close(state->fd[1]);
-	if (err == ERR_OPENR || err == ERR_OPENW)
-		free(state->child_args);
-	perror("init");
+	free_strlist(state->child_args);
+	perror("open");
 	return (err);
 }
 static t_err	handle_spawn_crash(t_state *state, t_err err)
@@ -73,9 +62,9 @@ int crash(t_state *state, t_err err)
 	
 	lasterr = errno;
 	if (err <= ERR_MALLOC)
-		custom_err = handle_init_crash(state, err);
+		custom_err = handle_init_crash(err);
 	if (err <= ERR_OPENW)
-		custom_err = handle_init_crash(state, err);
+		custom_err = handle_open_crash(state, err);
 	else if (err <= ERR_DUP2)
 		custom_err = handle_spawn_crash(state, err);
 	else
