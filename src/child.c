@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 11:24:42 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 11:31:10 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,18 @@ static void	check_paths(t_state *state, char **paths)
 	for (int i = 0; paths[i] && result; i++)
 		result &= access(paths[i], F_OK);
 	if (result == -1)
+	{
+		free_strlist(paths);
 		crash(state, ERR_CMDNOTFOUND);
+	}
 	result = -1;
 	for (int i = 0; paths[i] && result; i++)
 		result &= access(paths[i], X_OK);
 	if (result == -1)
+	{
+		free_strlist(paths);
 		crash(state, ERR_CMDDENIED);
+	}
 }
 
 static void	redirect(t_state *state, int n)
