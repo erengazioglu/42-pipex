@@ -49,6 +49,7 @@ Checklist:
 
 - wait will wait for any child that exits first. waitpid will wait for a specific child to exit instead.
 - it takes a &status int address, which it will set with the exit status of the child process.
+- I opted for "wait" instead of waitpid, because I'm waiting for multiple processes in a loop & I can always check against the last PID I created to save my exit value.
 
 
 ## Errors (perror, strerror)
@@ -64,6 +65,30 @@ Checklist:
 - strerror is just the message part, as a string.
 
 **Always check the return value of the function that produced the error first.** Programs don't reset errno to 0, so do this to make sure you don't report an error from the past.
+
+**Always save the last errno before running this.** `perror` might change the errno, so you'll use your saved errno to calculate the exit value instead.
+
+## Testing (important)
+
+### File descriptors
+
+`valgrind --track-fds=yes ./pipex tests/in/basic.txt cat wc tests/out/basic.txt`  
+This shows open fds besides the standard ones at the end of execution. It gave me a false positive once:
+
+```
+==274881== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==274881== Open file descriptor 5: /dev/ptmx
+==274881==    <inherited from parent>
+```
+It's the terminal's own leak so ignore it.
+
+### Exit codes
+
+The variable `$?` holds the exit code of the last program executed.  
+`echo $?` displays it, but note that it will also return an exit code of its own (0).
+
+You can add a custom right prompt to zsh to always display exit codes > 0 (by adding this line to `~/.zshrc`):  
+`RPROMPT='%(?..%F{red}%?%f)'`
 
 ## Unsorted
 

@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/26 18:37:20 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 11:24:42 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ void	child_process(t_state *state, int n)
 		state->child_args[0] = paths[i];
 		execve(state->child_args[0], state->child_args, state->envp);
 	}
+	free_strlist(paths);
 	crash(state, ERR_EXEC);
 }

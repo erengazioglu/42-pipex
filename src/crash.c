@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 10:34:06 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 11:21:06 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static t_err	handle_spawn_crash(t_state *state, t_err err)
 {
 	if (err > ERR_PIPE)
 		close_fds(state);
+	free_strlist(state->child_args);
 	perror("spawn");
 	return (ERR_NONE);
 }
@@ -51,6 +52,7 @@ static t_err	handle_child_crash(t_state *state, t_err err)
 	}
 	else
 		perror(NULL);
+	free_strlist(state->child_args);
 	close_fds(state);
 	return (err);
 }
@@ -63,10 +65,10 @@ int crash(t_state *state, t_err err)
 	lasterr = errno;
 	if (err <= ERR_MALLOC)
 		custom_err = handle_init_crash(err);
-	if (err <= ERR_OPENW)
-		custom_err = handle_open_crash(state, err);
-	else if (err <= ERR_DUP2)
+	else if (err <= ERR_FORK)
 		custom_err = handle_spawn_crash(state, err);
+	else if (err <= ERR_OPENW)
+		custom_err = handle_open_crash(state, err);
 	else
 		custom_err = handle_child_crash(state, err);
 	free(state);

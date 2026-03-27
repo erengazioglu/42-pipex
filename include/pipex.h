@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:32:30 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 10:34:17 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/27 11:19:06 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ typedef enum e_err {
 	ERR_NONE,
 	ERR_ARGS,
 	ERR_MALLOC,
-	ERR_OPENR,
-	ERR_OPENW,
 	ERR_PIPE,
 	ERR_FORK,
+	ERR_OPENR,
+	ERR_OPENW,
 	ERR_DUP2,
 	ERR_STR,
 	ERR_EXEC,
