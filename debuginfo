@@ -1,0 +1,7 @@
+total 0
+dr-x------ 2 erengazioglu erengazioglu  4 Mar 28 10:06 .
+dr-xr-xr-x 9 erengazioglu erengazioglu  0 Mar 28 10:06 ..
+lr-x------ 1 erengazioglu erengazioglu 64 Mar 28 10:06 0 -> pipe:[5080533]
+l-wx------ 1 erengazioglu erengazioglu 64 Mar 28 10:06 1 -> /home/erengazioglu/code/42/3-pipex/tests/out/noperms.txt
+lrwx------ 1 erengazioglu erengazioglu 64 Mar 28 10:06 2 -> /dev/pts/5
+lrwx------ 1 erengazioglu erengazioglu 64 Mar 28 10:06 5 -> /dev/ptmx

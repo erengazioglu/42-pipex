@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 17:13:56 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/28 11:48:59 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,21 @@ static void	open_file(t_state *state, int flag)
 static void	check_paths(t_state *state, char **paths)
 {
 	int	result;
+	int	i;
 
 	result = -1;
-	for (int i = 0; paths[i] && result; i++)
-		result &= access(paths[i], F_OK);
+	i = 0;
+	while (paths[i] && result)
+		result &= access(paths[i++], F_OK);
 	if (result == -1)
 	{
 		free_strlist(paths);
 		crash(state, ERR_CMDNOTFOUND);
 	}
 	result = -1;
-	for (int i = 0; paths[i] && result; i++)
-		result &= access(paths[i], X_OK);
+	i = 0;
+	while (paths[i] && result)
+		result &= access(paths[i++], X_OK);
 	if (result == -1)
 	{
 		free_strlist(paths);

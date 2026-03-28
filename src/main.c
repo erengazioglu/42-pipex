@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 17:14:07 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/28 00:47:30 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	main(int argc, char **argv, char **envp)
 			crash(state, ERR_FORK);
 		if (state->pid == 0)
 			child_process(state, i);
-		close(state->fd[1]);           // parent closes write-end
-		state->fd[2] = state->fd[0];  // carry read-end forward for next child's stdin
+		close(state->fd[1]);
+		state->fd[2] = state->fd[0];
 		state->fd[1] = -2;
 		i++;
 	}
