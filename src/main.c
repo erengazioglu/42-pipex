@@ -6,13 +6,13 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/28 13:42:40 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/28 19:04:01 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-int	get_exit_code(t_state *state)
+static int	get_exit_code(t_state *state)
 {
 	if (WIFSIGNALED(state->exit_code))
 		return (128 + WTERMSIG(state->exit_code));
@@ -21,7 +21,7 @@ int	get_exit_code(t_state *state)
 	return (1);
 }
 
-t_state	*init_state(int argc, char **argv, char **envp)
+static t_state	*init_state(int argc, char **argv, char **envp)
 {
 	t_state	*state;
 
@@ -39,7 +39,7 @@ t_state	*init_state(int argc, char **argv, char **envp)
 	return (state);
 }
 
-void	create_pipe(t_state *state, int n)
+static void	create_pipe(t_state *state, int n)
 {
 	int	fd[2];
 
@@ -49,6 +49,25 @@ void	create_pipe(t_state *state, int n)
 		crash(state, ERR_PIPE);
 	state->fd[0] = fd[0];
 	state->fd[1] = fd[1];
+}
+
+static void	cleanup(t_state *state, int n)
+{
+	if (n == 1)
+	{
+		close(state->fd[1]);
+		state->fd[2] = state->fd[0];
+		state->fd[0] = -2;
+	}
+	else if (n < state->argc - 3)
+	{
+		close(state->fd[1]);
+		close(state->fd[2]);
+		state->fd[2] = state->fd[0];
+		state->fd[0] = -2;
+	}
+	else
+		close(state->fd[2]);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -67,9 +86,7 @@ int	main(int argc, char **argv, char **envp)
 			crash(state, ERR_FORK);
 		if (state->pid == 0)
 			child_process(state, i);
-		close(state->fd[1]);
-		state->fd[2] = state->fd[0];
-		state->fd[1] = -2;
+		cleanup(state, i);
 		i++;
 	}
 	i = 1;

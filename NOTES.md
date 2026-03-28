@@ -82,6 +82,10 @@ This shows open fds besides the standard ones at the end of execution. It gave m
 ```
 It's the terminal's own leak so ignore it.
 
+You can also log for each process:
+`valgrind --track-fds=yes --trace-children=yes --log-file=valgrind-%p.log ./pipex tests/in/basic.txt cat wc tests/out/basic.txt`
+
+
 ### Exit codes
 
 The variable `$?` holds the exit code of the last program executed.  
