@@ -53,8 +53,7 @@ typedef enum e_err {
 
 // helper.c
 void	close_fds(t_state *state, bool all);
-t_state	*init_state(int argc, char **argv, char **envp);
-void	create_pipe(t_state *state, int n);
+void	custom_err(char *left, char *right);
 char	*ft_pathjoin(char *s1, char *s2, bool free_s1);
 void	free_strlist(char **list);
 

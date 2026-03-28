@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/27 16:07:18 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/28 13:14:53 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,7 @@ void	free_strlist(char **list)
 	free(list);
 }
 
-t_state	*init_state(int argc, char **argv, char **envp)
-{
-	t_state	*state;
 
-	if (argc < 5)
-		crash(NULL, ERR_ARGS);
-	state = ft_calloc(1, sizeof(t_state));
-	if (!state)
-		crash(NULL, ERR_MALLOC);
-	state->argc = argc;
-	state->argv = argv;
-	state->envp = envp;
-	state->fd[0] = -2;
-	state->fd[1] = -2;
-	state->fd[2] = -2;
-	return (state);
-}
 
 void	close_fds(t_state *state, bool all)
 {
@@ -45,16 +29,12 @@ void	close_fds(t_state *state, bool all)
 		close(state->fd[2]);
 }
 
-void	create_pipe(t_state *state, int n)
+void	custom_err(char *left, char *right)
 {
-	int	fd[2];
-
-	if (n == state->argc - 3)
-		return;
-	if (pipe(fd) == -1)
-		crash(state, ERR_PIPE);
-	state->fd[0] = fd[0];
-	state->fd[1] = fd[1];
+	write(2, left, ft_strlen(left));
+	write(2, ": ", 2);
+	write(2, right, ft_strlen(right));
+	write(2, "\n", 1);
 }
 
 char	*ft_pathjoin(char *s1, char *s2, bool free_s1)

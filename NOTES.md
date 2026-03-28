@@ -96,10 +96,13 @@ dup2 execve
 
 valgrind --track-fds=yes --trace-children=yes
 gdb for child processes
-gdb --args 
+
+gdb --args ./pipex tests/in/basic.txt cat "echo yes" tests/out/noperms.txt
 set detach-on-fork off
-b main etc etc
+set fork-follow-mode child
+b main
 layout src
+
 info inferiors
 inferior #
 
