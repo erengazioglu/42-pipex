@@ -1,0 +1,41 @@
+==26642== Memcheck, a memory error detector
+==26642== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==26642== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==26642== Command: ./pipex tests/in/basic.txt catiop \  tests/out/basic.txt
+==26642== Parent PID: 26634
+==26642== 
+==26642== Invalid free() / delete / delete[] / realloc()
+==26642==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26642==    by 0x109CE6: free_strlist (helper.c:18)
+==26642==    by 0x10A0C2: handle_child_crash (crash.c:62)
+==26642==    by 0x10A153: crash (crash.c:80)
+==26642==    by 0x109CAB: child_process (child.c:151)
+==26642==    by 0x1095BC: main (main.c:88)
+==26642==  Address 0x4a7ab20 is 0 bytes inside a block of size 31 free'd
+==26642==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26642==    by 0x109CE6: free_strlist (helper.c:18)
+==26642==    by 0x109C9A: child_process (child.c:150)
+==26642==    by 0x1095BC: main (main.c:88)
+==26642==  Block was alloc'd at
+==26642==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26642==    by 0x109E49: ft_pathjoin (helper.c:48)
+==26642==    by 0x109A8E: extract_paths (child.c:118)
+==26642==    by 0x109C06: child_process (child.c:143)
+==26642==    by 0x1095BC: main (main.c:88)
+==26642== 
+==26642== Warning: invalid file descriptor -2 in syscall close()
+==26642== 
+==26642== HEAP SUMMARY:
+==26642==     in use at exit: 1 bytes in 1 blocks
+==26642==   total heap usage: 100 allocs, 100 frees, 5,632 bytes allocated
+==26642== 
+==26642== LEAK SUMMARY:
+==26642==    definitely lost: 1 bytes in 1 blocks
+==26642==    indirectly lost: 0 bytes in 0 blocks
+==26642==      possibly lost: 0 bytes in 0 blocks
+==26642==    still reachable: 0 bytes in 0 blocks
+==26642==         suppressed: 0 bytes in 0 blocks
+==26642== Rerun with --leak-check=full to see details of leaked memory
+==26642== 
+==26642== For lists of detected and suppressed errors, rerun with: -s
+==26642== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

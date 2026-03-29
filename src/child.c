@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/29 01:59:28 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 03:20:54 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	redirect(t_state *state, int n)
 		fd = dup2(state->fd[1], 1);
 		if (fd == -1)
 			crash(state, ERR_DUP2);
+		close_fds(state, false);
 		return;
 	}
 	fd = dup2(state->fd[2], 0);
@@ -104,7 +105,7 @@ static char	**extract_paths(t_state *state)
 	{
 		if (ft_str_startswith(state->envp[i], "PATH="))
 		{
-			paths = ft_split(state->envp[i] + 5, ':', true);
+			paths = ft_split(state->envp[i] + 5, ':', false);
 			break;
 		}
 		i++;
@@ -122,30 +123,25 @@ static char	**extract_paths(t_state *state)
 	return (paths);
 }
 
-void	child_process(t_state *state, int n)
+void    child_process(t_state *state, int n)
 {
-	char	**paths;
-	
-	state->child_args = ft_split(state->argv[n + 1], ' ', false);
-	if (!state->child_args)
-		crash(state, ERR_STR);
-	if (!(*(state->child_args)))
-		crash(state, ERR_CMDNOTFOUND);
-	redirect(state, n);
-	if (ft_strchr(*state->child_args, '/'))
-	{
-		execve(state->child_args[0], state->child_args, state->envp);
-		crash(state, ERR_EXEC);
-	}
-	if (!*(state->envp))
-		crash(state, ERR_CMDNOTFOUND);
-	paths = extract_paths(state);
-	check_paths(state, paths);
-	for (int i = 0; paths[i]; i++)
-	{
-		state->child_args[0] = paths[i];
-		execve(state->child_args[0], state->child_args, state->envp);
-	}
-	free_strlist(paths);
-	crash(state, ERR_EXEC);
+    char    **paths;
+
+    state->child_args = ft_split(state->argv[n + 1], ' ', false);
+    if (!state->child_args)
+        crash(state, ERR_STR);
+    if (!*state->child_args)
+        crash(state, ERR_CMDNOTFOUND);
+    redirect(state, n);
+    if (ft_strchr(*state->child_args, '/'))
+    {
+        execve(state->child_args[0], state->child_args, state->envp);
+        crash(state, ERR_EXEC);
+    }
+    paths = extract_paths(state);
+    check_paths(state, paths);
+    for (int i = 0; paths[i]; i++)
+        execve(paths[i], state->child_args, state->envp);
+    free_strlist(paths);
+    crash(state, ERR_EXEC);
 }
