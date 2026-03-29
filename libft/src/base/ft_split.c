@@ -6,18 +6,18 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 15:42:11 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/29 01:36:27 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 01:51:30 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libft.h"
 
-// static void	free_list(char **list)
-// {
-// 	while (*list)
-// 		free(*(list++));
-// 	free(list);
-// }
+static void	free_list(char **list)
+{
+	while (*list)
+		free(*(list++));
+	free(list);
+}
 
 static int	skip(char const *s, char c, bool is_word)
 {
@@ -34,7 +34,7 @@ static int	skip(char const *s, char c, bool is_word)
 		while (s[i] && s[i] == c)
 			i++;
 	}
-	ft_printf("skipping %d\n", i);
+	// ft_printf("skipping %d\n", i);
 	return (i);
 }
 
@@ -42,10 +42,9 @@ static int	count_words(char const *s, char c, bool ltrim)
 {
 	int	count;
 
-	// first word is special (ltrim or not)
 	if (*s && ltrim)
 		s += skip(s, c, false);
-	ft_printf("first skip\n");
+	// ft_printf("first skip\n");
 	if (!(*s))
 		return (0);
 	s += skip(s, c, false);
@@ -63,45 +62,41 @@ static int	count_words(char const *s, char c, bool ltrim)
 	return (count);
 }
 
-// static int	pick_word(char const *s, char c, char **result)
-// {
-// 	int	len;
+static int	pick_word(char const *s, char c, char **result, bool ltrim)
+{
+	int	start;
+	int	len;
 
-// 	len = 0;
-// 	while (s[len] && s[len] != c)
-// 		len++;
-// 	*result = ft_substr(s, 0, len);
-// 	return (len);
-// }
+	start = 0;
+	if (ltrim)
+		start += skip(s, c, false);	
+	len = start;
+	while (s[len] && s[len] != c)
+		len++;
+	*result = ft_substr(s, start, len);
+	return (len);
+}
 
 char	**ft_split(char const *s, char c, bool ltrim)
 {
-	(void) ltrim;
-	ft_printf("%d\n", count_words(s, c, ltrim));
-	return (NULL);
+	char	**result;
+	char	**retval;
 
-	// char	**result;
-	// char	**retval;
-
-	// result = ft_calloc(count_words(s, c) + 1, sizeof(char *));
-	// if (!result)
-	// 	return (NULL);
-	// retval = result;
-	// if (ltrim && *s)
-	// 	s += trim_left(s, c);
-	// while (*s)
-	// {
-	// 	if (*s)
-	// 	{
-	// 		s += pick_word(s, c, result);
-	// 		if (!(*result))
-	// 		{
-	// 			free_list(retval);
-	// 			return (NULL);
-	// 		}
-	// 		result++;
-	// 	}
-	// 	s += trim_left(s, c);
-	// }
-	// return (retval);
+	result = ft_calloc(count_words(s, c, ltrim) + 1, sizeof(char *));
+	if (!result)
+		return (NULL);
+	retval = result;
+	if (ltrim && *s)
+		s += skip(s, c, false);
+	if (!(*s))
+		return (retval);
+	while (*s)
+	{
+		s += pick_word(s, c, result, ltrim);
+		if (!(*result))
+			return (free_list(retval), NULL);
+		result++;
+		s += skip(s, c, false);
+	}
+	return (retval);
 }
