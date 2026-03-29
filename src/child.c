@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/29 03:20:54 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 14:42:34 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	redirect(t_state *state, int n)
 		fd = dup2(state->fd[1], 1);
 		if (fd == -1)
 			crash(state, ERR_DUP2);
-		close_fds(state, false);
+		close_fds(state, true);
 		return;
 	}
 	fd = dup2(state->fd[2], 0);
