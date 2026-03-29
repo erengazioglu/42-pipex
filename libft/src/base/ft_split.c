@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 15:42:11 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/29 01:51:30 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 01:58:26 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static int	skip(char const *s, char c, bool is_word)
 		while (s[i] && s[i] == c)
 			i++;
 	}
-	// ft_printf("skipping %d\n", i);
 	return (i);
 }
 
@@ -44,7 +43,6 @@ static int	count_words(char const *s, char c, bool ltrim)
 
 	if (*s && ltrim)
 		s += skip(s, c, false);
-	// ft_printf("first skip\n");
 	if (!(*s))
 		return (0);
 	s += skip(s, c, false);
@@ -69,7 +67,7 @@ static int	pick_word(char const *s, char c, char **result, bool ltrim)
 
 	start = 0;
 	if (ltrim)
-		start += skip(s, c, false);	
+		start += skip(s, c, false);
 	len = start;
 	while (s[len] && s[len] != c)
 		len++;
