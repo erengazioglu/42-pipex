@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/28 19:12:49 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 01:59:28 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static char	**extract_paths(t_state *state)
 	{
 		if (ft_str_startswith(state->envp[i], "PATH="))
 		{
-			paths = ft_split(state->envp[i] + 5, ':');
+			paths = ft_split(state->envp[i] + 5, ':', true);
 			break;
 		}
 		i++;
@@ -126,7 +126,7 @@ void	child_process(t_state *state, int n)
 {
 	char	**paths;
 	
-	state->child_args = ft_split(state->argv[n + 1], ' ');
+	state->child_args = ft_split(state->argv[n + 1], ' ', false);
 	if (!state->child_args)
 		crash(state, ERR_STR);
 	if (!(*(state->child_args)))
