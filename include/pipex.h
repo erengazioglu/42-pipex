@@ -56,6 +56,7 @@ void	close_fds(t_state *state, bool all);
 void	custom_err(char *left, char *right);
 char	*ft_pathjoin(char *s1, char *s2, bool free_s1);
 void	free_strlist(char **list);
+int		dup_fd(t_state *state, int from, int to);
 
 // child.c
 void	child_process(t_state *state, int i);

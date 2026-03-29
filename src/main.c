@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:31:19 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/28 19:04:01 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 14:46:38 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	create_pipe(t_state *state, int n)
 	int	fd[2];
 
 	if (n == state->argc - 3)
-		return;
+		return ;
 	if (pipe(fd) == -1)
 		crash(state, ERR_PIPE);
 	state->fd[0] = fd[0];

@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 12:28:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/28 13:29:46 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 15:11:19 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static t_err	handle_init_crash(t_err err)
 
 static t_err	handle_open_crash(t_state *state, t_err err)
 {
-	char	*error; 
+	char	*error;
 	char	*file;
-	
+
 	error = strerror(errno);
 	if (err == ERR_OPENR)
 		file = state->argv[1];
@@ -37,11 +37,11 @@ static t_err	handle_open_crash(t_state *state, t_err err)
 	free_strlist(state->child_args);
 	return (err);
 }
+
 static t_err	handle_spawn_crash(t_state *state, t_err err)
 {
 	if (err > ERR_PIPE)
 		close_fds(state, false);
-	(void) err;
 	free_strlist(state->child_args);
 	perror("spawn");
 	return (ERR_NONE);
@@ -51,7 +51,6 @@ static t_err	handle_child_crash(t_state *state, t_err err)
 {
 	if (err == ERR_CMDNOTFOUND)
 		custom_err(state->child_args[0], "command not found");
-		// write(2, "command not found\n", 18);
 	else if (err == ERR_CMDDENIED)
 	{
 		errno = EACCES;
@@ -64,11 +63,11 @@ static t_err	handle_child_crash(t_state *state, t_err err)
 	return (err);
 }
 
-int crash(t_state *state, t_err err)
+int	crash(t_state *state, t_err err)
 {
 	int		lasterr;
 	t_err	custom_err;
-	
+
 	lasterr = errno;
 	if (err <= ERR_MALLOC)
 		custom_err = handle_init_crash(err);
@@ -83,11 +82,10 @@ int crash(t_state *state, t_err err)
 		exit(1);
 	if (custom_err == ERR_CMDNOTFOUND)
 		exit(127);
-	if (custom_err == ERR_CMDEMPTY || 
-		lasterr == EACCES || lasterr == EISDIR || lasterr == ENOEXEC)
+	if (custom_err == ERR_CMDEMPTY || lasterr == EACCES
+		|| lasterr == EISDIR || lasterr == ENOEXEC)
 		exit(126);
 	if (lasterr == ENOENT)
 		exit(127);
 	exit(1);
 }
-

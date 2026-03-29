@@ -6,20 +6,30 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 02:25:57 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/28 13:14:53 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 16:48:03 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	free_strlist(char **list)
+int	dup_fd(t_state *state, int from, int to)
 {
-	for (int i = 0; list[i]; i++)
-		free(list[i]);
-	free(list);
+	int	fd;
+
+	fd = dup2(from, to);
+	if (fd == -1)
+		crash(state, ERR_DUP2);
+	return (fd);
 }
 
+void	free_strlist(char **list)
+{
+	int	i;
 
+	while (list[i])
+		free(list[i++]);
+	free(list);
+}
 
 void	close_fds(t_state *state, bool all)
 {
