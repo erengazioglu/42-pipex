@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 15:42:11 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/28 20:53:54 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/29 01:36:27 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,39 @@ static int	skip(char const *s, char c, bool is_word)
 	i = 0;
 	if (is_word)
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && s[i] != c)
 			i++;
 	}
 	else
 	{
-		while (s[i] && s[i] != c)
+		while (s[i] && s[i] == c)
 			i++;
 	}
-	return (++i);
+	ft_printf("skipping %d\n", i);
+	return (i);
 }
 
 static int	count_words(char const *s, char c, bool ltrim)
 {
 	int	count;
 
+	// first word is special (ltrim or not)
 	if (*s && ltrim)
 		s += skip(s, c, false);
+	ft_printf("first skip\n");
 	if (!(*s))
 		return (0);
-	count = 0;
+	s += skip(s, c, false);
+	s += skip(s, c, true);
+	count = 1;
 	while (*s)
 	{
-		count++;
-		s += skip(s, c, true);
 		s += skip(s, c, false);
+		if (*s)
+		{
+			count++;
+			s += skip(s, c, true);
+		}
 	}
 	return (count);
 }
