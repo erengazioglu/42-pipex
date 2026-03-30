@@ -1,27 +1,10 @@
 # Project checklist
 
-## Development
+## Pre-delivery
 
-Check the following for leaks (run with `valgrind --leak-check=full --show-leak-kinds=all`):
+- Remove `TODO, NOTES, tests, .gdbinit` from submission repo.
+- Double-check norminette and comments.
 
-- `./pipex tests/in/basic.txt "cat -e" "wc -l" tests/out/outfile.txt` (both files exist)
-- `./pipex tests/infiles/basic.txt "cat -e" "wc -l" tests/out/outfile.txt` (infile doesn't exist)
-- `./pipex tests/in/basic.txt "cat -e" "wc -l" tests/outfiles/outfile.txt` (outfile doesn't exist)
-- `./pipex tests/infiles/basic.txt "cat -e" "wc -l" tests/outfiles/outfile.txt` (neither file exists)
+## Post-delivery
 
-## Full commands to copy:
-
-- `valgrind --leak-check=full --show-leak-kinds=all ./pipex tests/in/basic.txt "cat -e" "wc -l" tests/out/outfile.txt`
-- `valgrind --leak-check=full --show-leak-kinds=all ./pipex tests/infiles/basic.txt "cat -e" "wc -l" tests/out/outfile.txt`
-- `valgrind --leak-check=full --show-leak-kinds=all ./pipex tests/in/basic.txt "cat -e" "wc -l" tests/outfiles/outfile.txt`
-- `valgrind --leak-check=full --show-leak-kinds=all ./pipex tests/infiles/basic.txt "cat -e" "wc -l" tests/outfiles/outfile.txt`
-
-## Cleanup
-
-- Check if proper data types are being used (e.g. pid_t)
-- Do norminette
-- Remove TODO.md and NOTES.md
-- Remove tests? (or at least: 
-    - remove getpid from fork, 
-    - run each file,
-    - check files and norminette).
+- Create an annotated tag for the delivered repo (v1.0.0).
