@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 15:42:11 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/29 01:58:26 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/30 15:26:53 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,14 @@ static int	pick_word(char const *s, char c, char **result, bool ltrim)
 	int	len;
 
 	start = 0;
-	if (ltrim)
+	if (*s && ltrim)
 		start += skip(s, c, false);
 	len = start;
+	if (s[len] && !ltrim)
+	{
+		while (s[len] && s[len] == c)
+			len++;
+	}
 	while (s[len] && s[len] != c)
 		len++;
 	*result = ft_substr(s, start, len);
