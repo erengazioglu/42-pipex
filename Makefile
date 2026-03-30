@@ -27,6 +27,7 @@ libft/libft.a:
 	make -C libft
 clean	: 
 	rm -rf obj
+	make clean -C libft
 fclean	: clean
 	rm -f $(NAME) $(BONUS)
 	rm -f libft/libft.a
