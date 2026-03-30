@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/29 16:47:46 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/30 15:37:51 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ static char	**extract_paths(t_state *state)
 
 	paths = NULL;
 	i = 0;
+	if (!state->envp[i])
+		crash(state, ERR_CMDNOTFOUND);
 	while (state->envp[i])
 	{
 		if (ft_str_startswith(state->envp[i], "PATH="))
