@@ -6,7 +6,7 @@
 /*   By: egaziogl <egaziogl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:28:22 by egaziogl          #+#    #+#             */
-/*   Updated: 2026/03/30 15:37:51 by egaziogl         ###   ########.fr       */
+/*   Updated: 2026/03/30 15:40:13 by egaziogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,15 @@ static char	**extract_paths(t_state *state)
 			paths = ft_split(state->envp[i] + 5, ':', false);
 			break ;
 		}
-		i++;
-		if (!state->envp[i])
+		if (!state->envp[++i])
 			crash(state, ERR_CMDNOTFOUND);
 	}
 	i = 0;
 	while (paths[i])
 	{
 		paths[i] = ft_pathjoin(paths[i], state->child_args[0], true);
-		if (!paths[i])
+		if (!paths[i++])
 			crash(state, ERR_MALLOC);
-		i++;
 	}
 	return (paths);
 }
